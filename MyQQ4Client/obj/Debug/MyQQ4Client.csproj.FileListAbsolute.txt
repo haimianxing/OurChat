@@ -1,0 +1,11 @@
+C:\Users\Administrator\source\repos\MyQQ4Client\bin\Debug\MyQQ4Client.exe.config
+C:\Users\Administrator\source\repos\MyQQ4Client\bin\Debug\MyQQ4Client.exe
+C:\Users\Administrator\source\repos\MyQQ4Client\bin\Debug\MyQQ4Client.pdb
+C:\Users\Administrator\source\repos\MyQQ4Client\obj\Debug\MyQQ4Client.csproj.AssemblyReference.cache
+C:\Users\Administrator\source\repos\MyQQ4Client\obj\Debug\MyQQ4Client.csproj.SuggestedBindingRedirects.cache
+C:\Users\Administrator\source\repos\MyQQ4Client\obj\Debug\MyQQ4Client.MainForm.resources
+C:\Users\Administrator\source\repos\MyQQ4Client\obj\Debug\MyQQ4Client.Properties.Resources.resources
+C:\Users\Administrator\source\repos\MyQQ4Client\obj\Debug\MyQQ4Client.csproj.GenerateResource.cache
+C:\Users\Administrator\source\repos\MyQQ4Client\obj\Debug\MyQQ4Client.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\MyQQ4Client\obj\Debug\MyQQ4Client.exe
+C:\Users\Administrator\source\repos\MyQQ4Client\obj\Debug\MyQQ4Client.pdb

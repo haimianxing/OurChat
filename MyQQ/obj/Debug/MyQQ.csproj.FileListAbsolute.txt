@@ -1,0 +1,11 @@
+C:\Users\Administrator\source\repos\MyQQ\bin\Debug\MyQQ.exe.config
+C:\Users\Administrator\source\repos\MyQQ\bin\Debug\MyQQ.exe
+C:\Users\Administrator\source\repos\MyQQ\bin\Debug\MyQQ.pdb
+C:\Users\Administrator\source\repos\MyQQ\obj\Debug\MyQQ.csproj.AssemblyReference.cache
+C:\Users\Administrator\source\repos\MyQQ\obj\Debug\MyQQ.csproj.SuggestedBindingRedirects.cache
+C:\Users\Administrator\source\repos\MyQQ\obj\Debug\MyQQ.Properties.Resources.resources
+C:\Users\Administrator\source\repos\MyQQ\obj\Debug\MyQQ.csproj.GenerateResource.cache
+C:\Users\Administrator\source\repos\MyQQ\obj\Debug\MyQQ.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\MyQQ\obj\Debug\MyQQ.exe
+C:\Users\Administrator\source\repos\MyQQ\obj\Debug\MyQQ.pdb
+C:\Users\Administrator\source\repos\MyQQ\obj\Debug\MyQQ.MainForm.resources
