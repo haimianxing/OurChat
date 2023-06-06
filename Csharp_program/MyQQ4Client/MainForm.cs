@@ -7,16 +7,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MyQQ4Client;
 
 namespace MyQQ4Client
 {
     public partial class MainForm : Form
     {
+        Database db = new Database();
+        SqlUtils sqlUtils = new SqlUtils(); 
         public MainForm(EventHandler b1Click, EventHandler b2Click)
         {
             InitializeComponent();
             this.buttonConnect.Click += b1Click;
             this.buttonSend.Click += b2Click;
+            sqlUtils.setDB(db);
+            sqlUtils.GetContent();
+
+            Console.WriteLine(sqlUtils.RegisterUsers("zcz", "123"));//注册用户和密码
+            Console.WriteLine(sqlUtils.CheckUser("buaa", "0"));//验证用户和密码 返回错误与数据库不匹配
+            Console.WriteLine(sqlUtils.CheckUser("buaa", "123456"));//验证用户和密码 返回正确与数据库匹配
+            Console.WriteLine(sqlUtils.AddFriend(9, 5)); //给id为9号的用户添加id为5号的朋友
+            Console.WriteLine(sqlUtils.AddFriend(2, 1)); //给id为2号的用户添加id为1号的朋友
+
         }
 
         public string GetIPText()

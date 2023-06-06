@@ -9,3 +9,14 @@ C:\Users\Administrator\source\repos\MyQQ4Client\obj\Release\MyQQ4Client.csproj.G
 C:\Users\Administrator\source\repos\MyQQ4Client\obj\Release\MyQQ4Client.csproj.CoreCompileInputs.cache
 C:\Users\Administrator\source\repos\MyQQ4Client\obj\Release\MyQQ4Client.exe
 C:\Users\Administrator\source\repos\MyQQ4Client\obj\Release\MyQQ4Client.pdb
+E:\proj\others\OurChat\Csharp_program\MyQQ4Client\bin\Release\MyQQ4Client.exe.config
+E:\proj\others\OurChat\Csharp_program\MyQQ4Client\bin\Release\MyQQ4Client.exe
+E:\proj\others\OurChat\Csharp_program\MyQQ4Client\bin\Release\MyQQ4Client.pdb
+E:\proj\others\OurChat\Csharp_program\MyQQ4Client\obj\Release\MyQQ4Client.csproj.AssemblyReference.cache
+E:\proj\others\OurChat\Csharp_program\MyQQ4Client\obj\Release\MyQQ4Client.csproj.SuggestedBindingRedirects.cache
+E:\proj\others\OurChat\Csharp_program\MyQQ4Client\obj\Release\MyQQ4Client.MainForm.resources
+E:\proj\others\OurChat\Csharp_program\MyQQ4Client\obj\Release\MyQQ4Client.Properties.Resources.resources
+E:\proj\others\OurChat\Csharp_program\MyQQ4Client\obj\Release\MyQQ4Client.csproj.GenerateResource.cache
+E:\proj\others\OurChat\Csharp_program\MyQQ4Client\obj\Release\MyQQ4Client.csproj.CoreCompileInputs.cache
+E:\proj\others\OurChat\Csharp_program\MyQQ4Client\obj\Release\MyQQ4Client.exe
+E:\proj\others\OurChat\Csharp_program\MyQQ4Client\obj\Release\MyQQ4Client.pdb

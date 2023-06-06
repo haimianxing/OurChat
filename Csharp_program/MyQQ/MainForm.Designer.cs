@@ -37,6 +37,7 @@
             this.textBoxSendee = new System.Windows.Forms.TextBox();
             this.buttonSend = new System.Windows.Forms.Button();
             this.textBoxMsg = new System.Windows.Forms.TextBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
             this.SuspendLayout();
             // 
@@ -126,14 +127,24 @@
             this.textBoxMsg.Name = "textBoxMsg";
             this.textBoxMsg.ReadOnly = true;
             this.textBoxMsg.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxMsg.Size = new System.Drawing.Size(481, 267);
+            this.textBoxMsg.Size = new System.Drawing.Size(251, 267);
             this.textBoxMsg.TabIndex = 14;
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 12;
+            this.listBox1.Location = new System.Drawing.Point(277, 50);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(218, 268);
+            this.listBox1.TabIndex = 17;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(511, 356);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.textBoxSendee);
             this.Controls.Add(this.buttonSend);
             this.Controls.Add(this.textBoxMsg);
@@ -162,6 +173,7 @@
         private System.Windows.Forms.TextBox textBoxSendee;
         private System.Windows.Forms.Button buttonSend;
         private System.Windows.Forms.TextBox textBoxMsg;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 

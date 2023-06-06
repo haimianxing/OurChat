@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,11 +13,24 @@ namespace MyQQ
 {
     public partial class MainForm : Form
     {
+        Database db = new Database();
+        SqlUtils sqlUtils = new SqlUtils();
+        
+
+
         public MainForm(EventHandler bListenClick, EventHandler bSendClick)
         {
             InitializeComponent();
             this.buttonListen.Click += bListenClick;
             this.buttonSend.Click += bSendClick;
+            sqlUtils.setDB(db);
+            sqlUtils.GetContent();
+            Console.WriteLine(sqlUtils.RegisterUsers("zcz", "123"));
+            Console.WriteLine(sqlUtils.CheckUser("buaa", "0"));
+            Console.WriteLine(sqlUtils.CheckUser("buaa", "123456"));
+            Console.WriteLine(sqlUtils.AddFriend(9, 5));
+            Console.WriteLine(sqlUtils.AddFriend(2, 1));
+
         }
 
         public string GetIPText()
