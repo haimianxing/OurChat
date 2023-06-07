@@ -216,7 +216,10 @@ namespace MyQQ4Client
             if (db.OpenConnection())
             {
                 MySqlConnection conn = db.GetConnection();
-                string sql = "INSERT INTO friend_table (pid, sid) VALUES ('" + pid + "', '" + sid + "')";
+                string sql1 = "INSERT INTO friend_table (pid, sid) VALUES ('" + pid + "', '" + sid + "');";
+                string sql2 = "INSERT INTO friend_table (pid, sid) VALUES ('" + sid + "', '" + pid + "');";
+                string sqlBatch =  sql1 + sql2;
+
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 try
                 {
@@ -234,6 +237,39 @@ namespace MyQQ4Client
                 return false;
             }
         }
-
+        /// <summary>
+        /// 查找用户是否存在
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="sid"></param>
+        /// <returns></returns>
+        public bool IsExistUser(string uid)
+        {
+            if (db.OpenConnection())
+            {
+                MySqlConnection conn = db.GetConnection();
+                string sql = "SELECT COUNT(*) FROM qq_user WHERE uid=" + uid;
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                try
+                {
+                    int count = (int)cmd.ExecuteScalar();
+                    db.CloseConnection();
+                    if(count > 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                catch (MySqlException ex)
+                {
+                    Console.WriteLine(ex.Message); db.CloseConnection();
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

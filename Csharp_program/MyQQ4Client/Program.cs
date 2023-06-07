@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AddFriendForm;
 
 namespace MyQQ4Client
 {
@@ -25,13 +26,14 @@ namespace MyQQ4Client
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            form = new MainForm(bConnectClick, bSendClick);
+            form = new MainForm(bConnectClick, bSendClick,bAddFriendClick);
             Application.Run(form);
 
         }
 
         static EventHandler bConnectClick = SetConnection;
         static EventHandler bSendClick = SendMsg;
+        static EventHandler bAddFriendClick = AddFriend;
         static void SetConnection(object sender, EventArgs e)
         {
             ip = IPAddress.Parse(form.GetIPText());
@@ -88,6 +90,14 @@ namespace MyQQ4Client
             byte[] sendee = Encoding.UTF8.GetBytes(msg);
             clientSocket.Send(sendee);
             form.ClearMsgText();
+        }
+
+        //添加好友
+        static void AddFriend(object sender, EventArgs e)
+        {
+            //打开输入信息窗口
+            AddFriendForm fAddFriend = new AddFriendForm();
+            fAddFriend.show();
         }
     }
 }
