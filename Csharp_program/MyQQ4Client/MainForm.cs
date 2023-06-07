@@ -28,6 +28,8 @@ namespace MyQQ4Client
             Console.WriteLine(sqlUtils.CheckUser("buaa", "123456"));//验证用户和密码 返回正确与数据库匹配
             Console.WriteLine(sqlUtils.AddFriend(9, 5)); //给id为9号的用户添加id为5号的朋友
             Console.WriteLine(sqlUtils.AddFriend(2, 1)); //给id为2号的用户添加id为1号的朋友
+            Console.WriteLine(sqlUtils.getFriend(1) + "new1");
+            Console.WriteLine(sqlUtils.getSelfId("buaa") + "new2");
 
         }
 

@@ -59,6 +59,69 @@ namespace MyQQ4Client
         }
 
         /// <summary>
+        /// 查自己id
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public string getSelfId(String name)
+        {
+
+            if (db.OpenConnection())
+            {
+                MySqlConnection conn = db.GetConnection();
+                string sql = "SELECT qq_user.`name`, qq_user.uid FROM qq_user where  qq_user.`name` = '" + name+"' ;";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                string result = "";
+                while (reader.Read())
+                {
+                    string nickname = reader.GetString(0);
+                    int id = reader.GetInt32(1);
+                    result += "Nickname: " + nickname + ", id: " + id + "\n";
+                }
+                db.CloseConnection();
+                return result;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// 根据uid 查询出所有朋友用户
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
+        public string getFriend(int uid)
+        {
+
+            if (db.OpenConnection())
+            {
+                MySqlConnection conn = db.GetConnection();
+                string sql = "SELECT qq_user.uid,qq_user.`name` FROM qq_user WHERE qq_user.uid IN (SELECT friend_table.sid FROM friend_table WHERE friend_table.pid = " + uid+");";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                string result = "";
+                while (reader.Read())
+                {
+                    string nickname = reader.GetString(1);
+                    int id = reader.GetInt32(0);
+                    result += "Nickname: " + nickname + ", id: " + id + "\n";
+                }
+                db.CloseConnection();
+                return result;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+
+        
+
+        /// <summary>
         /// 注册新用户
         /// </summary>
         /// <param name="name"></param>
