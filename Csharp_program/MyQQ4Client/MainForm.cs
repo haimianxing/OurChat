@@ -15,11 +15,12 @@ namespace MyQQ4Client
     {
         Database db = new Database();
         SqlUtils sqlUtils = new SqlUtils(); 
-        public MainForm(EventHandler b1Click, EventHandler b2Click)
+        public MainForm(EventHandler b1Click, EventHandler b2Click, EventHandler b3Click)
         {
             InitializeComponent();
             this.buttonConnect.Click += b1Click;
             this.buttonSend.Click += b2Click;
+            this.buttonAddFriend.Click += b3Click;
             sqlUtils.setDB(db);
             sqlUtils.GetContent();
 
