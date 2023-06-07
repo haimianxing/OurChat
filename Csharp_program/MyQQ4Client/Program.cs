@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using AddFriendForm;
+//using AddFriendForm;
 
 namespace MyQQ4Client
 {
@@ -97,7 +97,7 @@ namespace MyQQ4Client
         {
             //打开输入信息窗口
             AddFriendForm fAddFriend = new AddFriendForm();
-            fAddFriend.show();
+            fAddFriend.Show();
         }
     }
 }

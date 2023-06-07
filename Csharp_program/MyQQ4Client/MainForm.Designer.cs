@@ -32,12 +32,12 @@
             this.textBoxSendee = new System.Windows.Forms.TextBox();
             this.buttonSend = new System.Windows.Forms.Button();
             this.buttonConnect = new System.Windows.Forms.Button();
-            this.buttonAddFriend = new System.Windows.Forms.Button();
             this.textBoxMsg = new System.Windows.Forms.TextBox();
             this.numericUpDownPort = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxIP = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonAddFriend = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
             this.SuspendLayout();
             // 
@@ -77,15 +77,6 @@
             this.buttonConnect.Text = "连接";
             this.buttonConnect.UseVisualStyleBackColor = true;
             // 
-            // buttonAddFriend
-            // 
-            this.buttonAddFriend.Location = new System.Drawing.Point(404, 13);
-            this.buttonAddFriend.Name = "buttonAddFriend";
-            this.buttonAddFriend.Size = new System.Drawing.Size(75, 23);
-            this.buttonAddFriend.TabIndex = 8;
-            this.buttonAddFriend.Text = "添加好友";
-            this.buttonAddFriend.UseVisualStyleBackColor = true;
-            // 
             // textBoxMsg
             // 
             this.textBoxMsg.BackColor = System.Drawing.SystemColors.Window;
@@ -94,7 +85,7 @@
             this.textBoxMsg.Name = "textBoxMsg";
             this.textBoxMsg.ReadOnly = true;
             this.textBoxMsg.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxMsg.Size = new System.Drawing.Size(481, 267);
+            this.textBoxMsg.Size = new System.Drawing.Size(334, 267);
             this.textBoxMsg.TabIndex = 13;
             // 
             // numericUpDownPort
@@ -141,11 +132,21 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "IP 地址";
             // 
+            // buttonAddFriend
+            // 
+            this.buttonAddFriend.Location = new System.Drawing.Point(421, 103);
+            this.buttonAddFriend.Name = "buttonAddFriend";
+            this.buttonAddFriend.Size = new System.Drawing.Size(75, 23);
+            this.buttonAddFriend.TabIndex = 18;
+            this.buttonAddFriend.Text = "添加好友";
+            this.buttonAddFriend.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(511, 351);
+            this.Controls.Add(this.buttonAddFriend);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.textBoxSendee);
             this.Controls.Add(this.buttonSend);
@@ -155,7 +156,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBoxIP);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.buttonAddFriend);
             this.Name = "MainForm";
             this.Text = "耳卯   --客户端";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).EndInit();
@@ -175,6 +175,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxIP;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonAddFriend;
     }
 }
 

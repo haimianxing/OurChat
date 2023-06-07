@@ -28,3 +28,4 @@ E:\proj\others\OurChat\Csharp_program\MyQQ4Client\obj\Debug\MyQQ4Client.csproj.C
 E:\proj\others\OurChat\Csharp_program\MyQQ4Client\obj\Debug\MyQQ4Client.csproj.CopyComplete
 E:\proj\others\OurChat\Csharp_program\MyQQ4Client\obj\Debug\MyQQ4Client.exe
 E:\proj\others\OurChat\Csharp_program\MyQQ4Client\obj\Debug\MyQQ4Client.pdb
+E:\proj\others\OurChat\Csharp_program\MyQQ4Client\obj\Debug\MyQQ4Client.AddFriendForm.resources

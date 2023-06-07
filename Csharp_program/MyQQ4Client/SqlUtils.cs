@@ -10,6 +10,7 @@ namespace MyQQ4Client
     public class SqlUtils
     {
         Database db = new Database();
+        
 
         public SqlUtils()
         {
@@ -27,6 +28,11 @@ namespace MyQQ4Client
             this.db = db;
         }
 
+
+        public void getName()
+        {
+            
+        }
 
         /// <summary>
         /// 查询所有用户
@@ -48,7 +54,7 @@ namespace MyQQ4Client
                     int id = reader.GetInt32(1);
                     result += "Nickname: " + nickname + ", id: " + id + "\n";
                 }
-                Console.WriteLine(result);
+                //Console.WriteLine(result);
                 db.CloseConnection();
                 return result;
             }
@@ -70,6 +76,7 @@ namespace MyQQ4Client
             {
                 MySqlConnection conn = db.GetConnection();
                 string sql = "SELECT qq_user.`name`, qq_user.uid FROM qq_user where  qq_user.`name` = '" + name+"' ;";
+                Console.WriteLine(sql);
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 string result = "";
@@ -220,7 +227,7 @@ namespace MyQQ4Client
                 string sql2 = "INSERT INTO friend_table (pid, sid) VALUES ('" + sid + "', '" + pid + "');";
                 string sqlBatch =  sql1 + sql2;
 
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlCommand cmd = new MySqlCommand(sqlBatch, conn);
                 try
                 {
                     cmd.ExecuteNonQuery(); db.CloseConnection();
@@ -248,11 +255,11 @@ namespace MyQQ4Client
             if (db.OpenConnection())
             {
                 MySqlConnection conn = db.GetConnection();
-                string sql = "SELECT COUNT(*) FROM qq_user WHERE uid=" + uid;
+                string sql = "SELECT COUNT(*) FROM qq_user WHERE uid = " + uid;
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 try
                 {
-                    int count = (int)cmd.ExecuteScalar();
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
                     db.CloseConnection();
                     if(count > 0)
                     {

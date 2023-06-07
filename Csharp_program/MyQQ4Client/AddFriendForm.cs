@@ -1,3 +1,17 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using MyQQ4Client;
+using MySqlX.XDevAPI.Common;
+
+
 // 添加好友窗口
 namespace MyQQ4Client
 {
@@ -6,20 +20,40 @@ namespace MyQQ4Client
         private TextBox textFriendID;
         private Button buttonSave;
         private Label label1;
+        private SqlUtils sqlUtils;
 
-        public NewForm()
+        public AddFriendForm()
         {
             InitializeComponent();
+            sqlUtils = new SqlUtils();
         }
+
+
 
         private void InitializeComponent()
         {
             this.textFriendID = new System.Windows.Forms.TextBox();
             this.buttonSave = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-
-
-            // 设置文本框和按钮的属性和位置等
+            this.SuspendLayout();
+            // 
+            // textFriendID
+            // 
+            this.textFriendID.Location = new System.Drawing.Point(69, 13);
+            this.textFriendID.MaxLength = 11;
+            this.textFriendID.Name = "textFriendID";
+            this.textFriendID.Size = new System.Drawing.Size(100, 21);
+            this.textFriendID.TabIndex = 6;
+            // 
+            // buttonSave
+            // 
+            this.buttonSave.Location = new System.Drawing.Point(50, 35);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(75, 23);
+            this.buttonSave.TabIndex = 15;
+            this.buttonSave.Text = "添加";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.ButtonSave_Click);
             // 
             // label1
             // 
@@ -30,36 +64,19 @@ namespace MyQQ4Client
             this.label1.TabIndex = 7;
             this.label1.Text = "好友ID:";
             // 
-            // textFriendID
-            // 
-            this.textFriendID.Location = new System.Drawing.Point(69, 13);
-            this.textFriendID.MaxLength = 11;
-            this.textFriendID.Name = "textFriendID";
-            this.textFriendID.Size = new System.Drawing.Size(100, 21);
-            this.textFriendID.TabIndex = 6;
-            // 
-            // buttonSend
-            // 
-            //this.buttonSave.Enabled = false;
-            this.buttonSave.Location = new System.Drawing.Point(50, 35);
-            this.buttonSave.Name = "buttonSend";
-            this.buttonSave.Size = new System.Drawing.Size(75, 23);
-            this.buttonSave.TabIndex = 15;
-            this.buttonSave.Text = "添加";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            // 
-            // MainForm
+            // AddFriendForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(130, 45);
+            this.ClientSize = new System.Drawing.Size(221, 84);
+            this.Controls.Add(this.textFriendID);
+            this.Controls.Add(this.buttonSave);
+            this.Controls.Add(this.label1);
+            this.Name = "AddFriendForm";
             this.Text = "添加好友";
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
-            this.Controls.Add(textFriendID);
-            this.Controls.Add(buttonSave);
-            this.Controls.Add(label1);
-            // 注册按钮点击事件处理程序
-            this.buttonSave.Click += ButtonSave_Click;
         }
 
         private void ButtonSave_Click(object sender, EventArgs e)
@@ -68,22 +85,39 @@ namespace MyQQ4Client
         
             if(FriendID == null)
             {
-                MessageBox.show("请输入好友ID");
+                MessageBox.Show("请输入好友ID");
             }
             else
             {
+                Console.WriteLine("0");
                 // 查询好友uid是否注册
-                if(MainForm.sqlUtils.IsExistUser(FriendID))
+                if(sqlUtils.IsExistUser(FriendID))
                 {
+                    Console.WriteLine("1");
                     //暂时没有得到自己sid的方法，晚些修改
-                    if(MainForm.sqlUtils.AddFriend(int.Parse(FriendID), sid))
+                    string result = sqlUtils.getSelfId(MainForm.myname);
+                    Regex regex = new Regex(@"id:\s*(\d+)"); // 定义正则表达式
+                    Match match = regex.Match(result); // 匹配字符串
+                    if (match.Success)
                     {
-                        MessageBox.show("添加成功");
+                        string idValue = match.Groups[1].Value; // 提取 id 属性值
+                        int id = int.Parse(idValue); // 将字符串转换为整数类型的值
+
+                        if (sqlUtils.AddFriend(id, Convert.ToInt32(FriendID)))
+                        {
+                            MessageBox.Show("添加成功");
+                        }
                     }
+                    else {
+
+                        MessageBox.Show("添加失败");
+                    }
+
+                    
                 }
                 else
                 {
-                    MessageBox.show("未找到对应uid用户");
+                    MessageBox.Show("未找到对应uid用户");
                 }
             }
             
