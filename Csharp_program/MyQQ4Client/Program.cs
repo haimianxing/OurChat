@@ -27,7 +27,7 @@ namespace MyQQ4Client
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             form = new MainForm(bConnectClick, bSendClick,bAddFriendClick);
-            Application.Run(form);
+            Application.Run(new Login());
 
         }
 
