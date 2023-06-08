@@ -7,12 +7,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 //using AddFriendForm;
 
 namespace MyQQ4Client
 {
     static class Program
-    {
+    {        
         static Socket clientSocket = null;
         static IPAddress ip = null;
         static IPEndPoint point = null;
@@ -28,7 +29,12 @@ namespace MyQQ4Client
             Application.SetCompatibleTextRenderingDefault(false);
             form = new MainForm(bConnectClick, bSendClick,bAddFriendClick);
             Application.Run(new Login());
-
+            if (Publicv.Creatmainform)
+            {
+                Publicv.Creatmainform = false;//标志复位
+                Application.Run(form);//启动主界面
+            }
+            
         }
 
         static EventHandler bConnectClick = SetConnection;
