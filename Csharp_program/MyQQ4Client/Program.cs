@@ -7,15 +7,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-<<<<<<< HEAD
 using MySql.Data.MySqlClient;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
 using System.Xml.Linq;
-=======
-
-//using AddFriendForm;
->>>>>>> efa47236b966002021cb2e13304655bc8a9ca7e6
 
 namespace MyQQ4Client
 {
@@ -38,12 +33,7 @@ namespace MyQQ4Client
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-<<<<<<< HEAD
             form = new MainForm(bConnectClick, bSendClick,bAddFriendClick,bChangeClick);
-            Application.Run(form);
-
-=======
-            form = new MainForm(bConnectClick, bSendClick,bAddFriendClick);
             Application.Run(new Login());
             if (Publicv.Creatmainform)
             {
@@ -51,7 +41,6 @@ namespace MyQQ4Client
                 Application.Run(form);//启动主界面
             }
             
->>>>>>> efa47236b966002021cb2e13304655bc8a9ca7e6
         }
 
         static EventHandler bConnectClick = SetConnection;
