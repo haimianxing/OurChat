@@ -121,6 +121,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="record.txt" />
     <Content Include="Resources\image1.jpg" />
     <Content Include="Resources\image2.jpg" />
     <Content Include="Resources\image3.jpg" />

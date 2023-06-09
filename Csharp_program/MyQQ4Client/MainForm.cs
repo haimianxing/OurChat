@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MyQQ4Client;
+using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI.Common;
 
 namespace MyQQ4Client
@@ -18,15 +21,21 @@ namespace MyQQ4Client
         Database db = new Database();
         SqlUtils sqlUtils = new SqlUtils();
         public static String myname = "buaa"; //名字
+        static string uid = "";
         public MainForm(EventHandler b1Click, EventHandler b2Click, EventHandler b3Click, EventHandler b4Click)
         {
             InitializeComponent();
             this.buttonConnect.Click += b1Click;
             this.buttonSend.Click += b2Click;
             this.buttonAddFriend.Click += b3Click;
-            this.button_ChangeName.Click += b3Click;
+            this.button_ChangeName.Click += ChangeName;
+
+            
+
+
+            myname = read();
             sqlUtils.setDB(db);
-            sqlUtils.GetContent();
+            textBox_username.Text = myname;
 
             //Console.WriteLine(sqlUtils.RegisterUsers("zcz", "123"));//注册用户和密码
             //Console.WriteLine(sqlUtils.CheckUser("buaa", "0"));//验证用户和密码 返回错误与数据库不匹配
@@ -36,6 +45,70 @@ namespace MyQQ4Client
             //Console.WriteLine(sqlUtils.getFriend(1) );
             //Console.WriteLine(sqlUtils.getSelfId("buaa") );
 
+        }
+
+        
+
+        public string read()
+        {
+            string path = @"./record.txt";
+            if (!File.Exists(path))
+            {
+                File.WriteAllText(path, "");
+            }
+            return File.ReadAllText(path);
+        }
+
+        // 定义存储额外参数的自定义类
+        public class MyEventArgs : EventArgs
+        {
+            public string Name { get; }
+
+            public MyEventArgs(string name)
+            {
+                this.Name = name;
+            }
+        }
+
+        public void record_txt(string name)
+        {
+            string path = @"./record.txt"; // 存储路径和文件名
+            if (File.Exists(path))
+            {
+                File.WriteAllText(path, ""); // 将文件内容清空
+                File.Delete(path); // 删除文件
+            }
+            File.WriteAllText(path, name);
+        }
+
+        //更改名称
+        void ChangeName(object sender, EventArgs e)
+        {
+
+            SqlUtils sqlUtils = new SqlUtils();
+            string res = sqlUtils.getSelfId(read());
+            Regex regex = new Regex(@"id:\s*(\d+)"); // 定义正则表达式
+            Match match = regex.Match(res); // 匹配字符串
+            uid = match.Groups[1].Value;
+
+            string connStr = "server=127.0.0.1;port=3306;user=root;password=root;database=myqq_user;";
+            MySqlConnection conn = new MySqlConnection(connStr);
+            conn.Open();
+            if (conn.State == System.Data.ConnectionState.Open)
+            {
+                string sql = "update qq_user set name = '" + textBox_username.Text + "' where uid = " + uid;
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                int result = cmd.ExecuteNonQuery();//返回值是数据库中受影响的数据行数
+                if (result != 0)
+                {
+                    record_txt(textBox_username.Text);
+                    MessageBox.Show("更改成功", "提示");
+                }
+            }
+            else
+            {
+                MessageBox.Show("数据库连接错误");
+            }
         }
 
         public string GetIPText()

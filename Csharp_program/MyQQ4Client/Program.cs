@@ -11,6 +11,9 @@ using MySql.Data.MySqlClient;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
 using System.Xml.Linq;
+using System.IO;
+using MySqlX.XDevAPI.Common;
+using static MyQQ4Client.MainForm;
 
 namespace MyQQ4Client
 {
@@ -43,6 +46,17 @@ namespace MyQQ4Client
             
         }
 
+        public static string read()
+        {
+            string path = @"./record.txt";
+            if (!File.Exists(path))
+            {
+                File.WriteAllText(path, "");
+            }
+            return File.ReadAllText(path);
+        }
+
+
         static EventHandler bConnectClick = SetConnection;
         static EventHandler bSendClick = SendMsg;
         static EventHandler bAddFriendClick = AddFriend;
@@ -52,12 +66,20 @@ namespace MyQQ4Client
         //更改名称
         static void ChangeName(object sender, EventArgs e)
         {
+            string name = (e as MyEventArgs)?.Name;
+
+            SqlUtils sqlUtils = new SqlUtils();
+            string res = sqlUtils.getSelfId(read());
+            Regex regex = new Regex(@"id:\s*(\d+)"); // 定义正则表达式
+            Match match = regex.Match(res); // 匹配字符串
+            uid = match.Groups[1].Value;
+
             string connStr = "server=127.0.0.1;port=3306;user=root;password=root;database=myqq_user;";
             MySqlConnection conn = new MySqlConnection(connStr);
             conn.Open();
             if (conn.State == System.Data.ConnectionState.Open)
             {
-                string sql = "update qq_user set name = '" + textBox_name.Text + "' where uid = " + uid;
+                string sql = "update qq_user set name = '" + name + "' where uid = " + uid;
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 int result = cmd.ExecuteNonQuery();//返回值是数据库中受影响的数据行数
                 if (result != 0)
