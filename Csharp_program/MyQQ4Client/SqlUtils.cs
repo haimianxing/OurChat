@@ -71,11 +71,10 @@ namespace MyQQ4Client
         /// <returns></returns>
         public string getSelfId(String name)
         {
-
             if (db.OpenConnection())
             {
                 MySqlConnection conn = db.GetConnection();
-                string sql = "SELECT qq_user.`name`, qq_user.uid FROM qq_user where  qq_user.`name` = '" + name+"' ;";
+                string sql = "SELECT qq_user.`name`, qq_user.uid FROM qq_user where  qq_user.`name` = '" + name + "' ;";
                 Console.WriteLine(sql);
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 MySqlDataReader reader = cmd.ExecuteReader();

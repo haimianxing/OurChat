@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.labelStatus = new System.Windows.Forms.Label();
             this.textBoxSendee = new System.Windows.Forms.TextBox();
             this.buttonSend = new System.Windows.Forms.Button();
@@ -38,14 +39,22 @@
             this.textBoxIP = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonAddFriend = new System.Windows.Forms.Button();
+            this.button_ChangeName = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.textBox_username = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelStatus
             // 
             this.labelStatus.AutoSize = true;
             this.labelStatus.ForeColor = System.Drawing.Color.Red;
-            this.labelStatus.Location = new System.Drawing.Point(355, 16);
+            this.labelStatus.Location = new System.Drawing.Point(448, 15);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(53, 12);
             this.labelStatus.TabIndex = 17;
@@ -70,9 +79,9 @@
             // 
             // buttonConnect
             // 
-            this.buttonConnect.Location = new System.Drawing.Point(274, 13);
+            this.buttonConnect.Location = new System.Drawing.Point(393, 10);
             this.buttonConnect.Name = "buttonConnect";
-            this.buttonConnect.Size = new System.Drawing.Size(75, 23);
+            this.buttonConnect.Size = new System.Drawing.Size(49, 23);
             this.buttonConnect.TabIndex = 14;
             this.buttonConnect.Text = "连接";
             this.buttonConnect.UseVisualStyleBackColor = true;
@@ -80,17 +89,17 @@
             // textBoxMsg
             // 
             this.textBoxMsg.BackColor = System.Drawing.SystemColors.Window;
-            this.textBoxMsg.Location = new System.Drawing.Point(15, 42);
+            this.textBoxMsg.Location = new System.Drawing.Point(15, 74);
             this.textBoxMsg.Multiline = true;
             this.textBoxMsg.Name = "textBoxMsg";
             this.textBoxMsg.ReadOnly = true;
             this.textBoxMsg.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxMsg.Size = new System.Drawing.Size(334, 267);
+            this.textBoxMsg.Size = new System.Drawing.Size(277, 235);
             this.textBoxMsg.TabIndex = 13;
             // 
             // numericUpDownPort
             // 
-            this.numericUpDownPort.Location = new System.Drawing.Point(213, 13);
+            this.numericUpDownPort.Location = new System.Drawing.Point(323, 12);
             this.numericUpDownPort.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -108,7 +117,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(175, 16);
+            this.label2.Location = new System.Drawing.Point(288, 15);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 12);
             this.label2.TabIndex = 11;
@@ -116,17 +125,17 @@
             // 
             // textBoxIP
             // 
-            this.textBoxIP.Location = new System.Drawing.Point(69, 13);
+            this.textBoxIP.Location = new System.Drawing.Point(216, 12);
             this.textBoxIP.MaxLength = 15;
             this.textBoxIP.Name = "textBoxIP";
-            this.textBoxIP.Size = new System.Drawing.Size(100, 21);
+            this.textBoxIP.Size = new System.Drawing.Size(66, 21);
             this.textBoxIP.TabIndex = 10;
             this.textBoxIP.Text = "127.0.0.1";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 16);
+            this.label1.Location = new System.Drawing.Point(163, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(47, 12);
             this.label1.TabIndex = 9;
@@ -134,18 +143,75 @@
             // 
             // buttonAddFriend
             // 
-            this.buttonAddFriend.Location = new System.Drawing.Point(421, 103);
+            this.buttonAddFriend.Location = new System.Drawing.Point(367, 39);
             this.buttonAddFriend.Name = "buttonAddFriend";
             this.buttonAddFriend.Size = new System.Drawing.Size(75, 23);
             this.buttonAddFriend.TabIndex = 18;
             this.buttonAddFriend.Text = "添加好友";
             this.buttonAddFriend.UseVisualStyleBackColor = true;
             // 
+            // button_ChangeName
+            // 
+            this.button_ChangeName.Location = new System.Drawing.Point(79, 47);
+            this.button_ChangeName.Name = "button_ChangeName";
+            this.button_ChangeName.Size = new System.Drawing.Size(67, 21);
+            this.button_ChangeName.TabIndex = 23;
+            this.button_ChangeName.Text = "更换名称";
+            this.button_ChangeName.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(5, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(68, 50);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 24;
+            this.pictureBox1.TabStop = false;
+            // 
+            // textBox_username
+            // 
+            this.textBox_username.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox_username.Location = new System.Drawing.Point(79, 12);
+            this.textBox_username.MaxLength = 15;
+            this.textBox_username.Name = "textBox_username";
+            this.textBox_username.Size = new System.Drawing.Size(73, 26);
+            this.textBox_username.TabIndex = 25;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Location = new System.Drawing.Point(290, 68);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(219, 241);
+            this.groupBox1.TabIndex = 26;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "好友";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("宋体", 14.14286F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox1.Location = new System.Drawing.Point(6, 20);
+            this.textBox1.MaxLength = 15;
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(207, 215);
+            this.textBox1.TabIndex = 25;
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(511, 351);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.textBox_username);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.button_ChangeName);
             this.Controls.Add(this.buttonAddFriend);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.textBoxSendee);
@@ -159,6 +225,9 @@
             this.Name = "MainForm";
             this.Text = "耳卯   --客户端";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -176,6 +245,12 @@
         private System.Windows.Forms.TextBox textBoxIP;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonAddFriend;
+        private System.Windows.Forms.Button button_ChangeName;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TextBox textBox_username;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

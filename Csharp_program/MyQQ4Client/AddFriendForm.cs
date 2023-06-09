@@ -89,13 +89,13 @@ namespace MyQQ4Client
             }
             else
             {
-                Console.WriteLine("0");
                 // 查询好友uid是否注册
                 if(sqlUtils.IsExistUser(FriendID))
                 {
-                    Console.WriteLine("1");
                     //暂时没有得到自己sid的方法，晚些修改
+                    
                     string result = sqlUtils.getSelfId(MainForm.myname);
+                    Console.WriteLine(result);
                     Regex regex = new Regex(@"id:\s*(\d+)"); // 定义正则表达式
                     Match match = regex.Match(result); // 匹配字符串
                     if (match.Success)
