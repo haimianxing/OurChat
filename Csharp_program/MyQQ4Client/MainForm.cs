@@ -5,9 +5,11 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MyQQ4Client;
+using MySqlX.XDevAPI.Common;
 
 namespace MyQQ4Client
 {
@@ -16,12 +18,13 @@ namespace MyQQ4Client
         Database db = new Database();
         SqlUtils sqlUtils = new SqlUtils();
         public static String myname = "buaa"; //名字
-        public MainForm(EventHandler b1Click, EventHandler b2Click, EventHandler b3Click)
+        public MainForm(EventHandler b1Click, EventHandler b2Click, EventHandler b3Click, EventHandler b4Click)
         {
             InitializeComponent();
             this.buttonConnect.Click += b1Click;
             this.buttonSend.Click += b2Click;
             this.buttonAddFriend.Click += b3Click;
+            this.button_ChangeName.Click += b3Click;
             sqlUtils.setDB(db);
             sqlUtils.GetContent();
 
@@ -103,6 +106,55 @@ namespace MyQQ4Client
             else
             {
                 this.buttonSend.Enabled = enabled;
+            }
+        }
+
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            button_ChangeName.Visible = false;
+            textBox_username.Visible = false;
+            textBox_username.Text = "";
+            timer1.Interval = 50000;
+            timer1.Start();
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (textBox_username.Text != "")//每5秒查询更新好友
+            {
+                SqlUtils sqlUtils = new SqlUtils();
+                string result = sqlUtils.getSelfId(textBox_username.Text);
+                Regex regex = new Regex(@"id:\s*(\d+)"); // 定义正则表达式
+                Match match = regex.Match(result); // 匹配字符串
+                int uid = 1;
+                if (match.Success)
+                {
+                    string idValue = match.Groups[1].Value; // 提取 id 属性值
+                    int id = int.Parse(idValue); // 将字符串转换为整数类型的值
+                    uid = id;
+                }
+
+
+                sqlUtils.setDB(db);
+                result = sqlUtils.getFriend(uid);
+                string pattern = @"Nickname:\s*(\w+),\s*id:\s*\d+";
+                 regex = new Regex(pattern);
+                MatchCollection matches = regex.Matches(result);
+                textBox1.Text = string.Empty;
+                if (matches.Count > 0)
+                {
+                    foreach (Match match1 in matches)
+                    {
+                        string nickname = match1.Groups[1].Value;
+                        textBox1.Text += nickname + Environment.NewLine; // 输出
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No match found.");
+                }
             }
         }
     }
