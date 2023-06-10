@@ -39,6 +39,7 @@ namespace MyQQ4Client
                 Publicv.Creatmainform = false;//标志复位
                 form.textBox_username.Text = GlobalVariables.myname;
                 Application.Run(form);//启动主界面
+                form.flush_form();
             }
             
         }
@@ -48,6 +49,7 @@ namespace MyQQ4Client
         static TextBox textBox_friend = null;
         static string uid = "";
         static MainForm form = null;
+        static SqlUtils sqlUtils = new SqlUtils();
 
 
 
@@ -64,7 +66,6 @@ namespace MyQQ4Client
         {
             string name = (e as MyEventArgs)?.Name;
 
-            SqlUtils sqlUtils = new SqlUtils();
             string res = sqlUtils.getSelfId(GlobalVariables.myname);
             Regex regex = new Regex(@"id:\s*(\d+)"); // 定义正则表达式
             Match match = regex.Match(res); // 匹配字符串
@@ -101,7 +102,7 @@ namespace MyQQ4Client
                 clientSocket.Connect(point);
                 form.SetConnectionStatusLabel(true, point.ToString());
                 form.SetButtonSendEnabled(true);
-                form.Println($"连接 {point} 的服务器。");
+                form.Println($"已经连接 {point} 的服务器。");
 
 
                 //给上线成功的用户随机分配一个头像
@@ -141,47 +142,7 @@ namespace MyQQ4Client
                 }
                 Database db = new Database();
                 SqlUtils sqlUtils = new SqlUtils();
-                //string result = sqlUtils.getSelfId(GlobalVariables.myname);
-                //Regex regex = new Regex(@"id:\s*(\d+)"); // 定义正则表达式
-                //Match match = regex.Match(result); // 匹配字符串
-                //if (match.Success)
-                //{
-                //    string idValue = match.Groups[1].Value; // 提取 id 属性值
-                //    int id = int.Parse(idValue); // 将字符串转换为整数类型的值
-                //    uid = id.ToString();
-                //}
-                    
-                //string connStr = "server=127.0.0.1;port=3306;user=root;password=root;database=myqq_user;";
-                //MySqlConnection conn = new MySqlConnection(connStr);
-                //conn.Open();
-                //string sql_id = "SELECT * FROM qq_user where uid=" + uid;
-                ////string sql_fri = "SELECT b1.name AS pidName, b2.name AS sidName FROM friend_table\r\nJOIN qq_user AS b1 ON friend_table.pid=b1.uid\r\nJOIN qq_user AS b2 ON friend_table.sid=b2.uid\r\nWHERE friend_table.friend_id="+uid+";";
-                ////查用户名的sql
-                //MySqlCommand cmd = new MySqlCommand(sql_id, conn);
-                //MySqlDataReader reader = cmd.ExecuteReader();       //处理查询结果,创建一个实例保存查询出来的结构
-                //while (reader.Read())
-                //{
-                //    textBox_name.Text = reader.GetString(1);
-                //}
                 textBox_name.Text = GlobalVariables.myname;
-                // 关闭数据读取器
-                //reader.Close();
-                //try
-                //{
-                //    if (conn.State == System.Data.ConnectionState.Open)
-                //    {
-                //        //MessageBox.Show("数据库已打开");
-                //    }
-                //    else
-                //    {
-                //        MessageBox.Show("数据库打开失败");
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show(ex.Message);
-                //}
-                //conn.Close();
 
 
                 //不停的接收服务器端发送的消息
@@ -211,8 +172,6 @@ namespace MyQQ4Client
                     byte[] buf = new byte[1024 * 1024 * 2];
                     int len = send.Receive(buf);
                     if (len == 0) break;
-                    //string s = Encoding.UTF8.GetString(buf, 0, len);
-                    //form.Println(s);
 
                     //反序列化
                     System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new BinaryFormatter();
@@ -224,7 +183,20 @@ namespace MyQQ4Client
                         {
                             //文本消息 
                             case MsgType.Text:
-                                form.Println(msg.content);
+                                //form.Println(msg.content);
+
+                                //文本消息处理格式对齐
+                                SqlUtils sqlUtils = new SqlUtils();
+                                string news = "";
+                                string[] s1 = msg.content.Split('&');
+                                if (s1[0].Equals(GlobalVariables.id)) {
+                                    news += "我：";
+                                }
+                                else {
+                                    news += sqlUtils.getSelfName(s1[0]) +": ";
+                                }
+                                news += s1[1];
+                                form.map_notice_and_println(s1[0], news);
                                 break;
                             //通知消息
                             case MsgType.Notice:

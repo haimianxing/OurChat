@@ -98,6 +98,19 @@ namespace MyQQ4Client
             ListView.SelectedListViewItemCollection item = listView1.SelectedItems;
             //MessageBox.Show("点击了1个item  " + item[0].Text);
             MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            if (!item[0].Text.Contains("#####"))
+            {
+                solve_notice(item, buttons);
+            }
+            else {
+                solve_news(item);
+            
+            }
+
+            
+        }
+
+        private void solve_notice(ListView.SelectedListViewItemCollection item, MessageBoxButtons buttons) {
             string message = item[0].Text + "想添加你为好友";
             DialogResult result = MessageBox.Show(message, "确认添加", buttons);
 
@@ -110,7 +123,7 @@ namespace MyQQ4Client
                 if (match.Success)
                 {
                     //sqlUtils.AddFriend(Convert.ToInt32(dicMessageToId[item[0].Text])
-                    if (sqlUtils.AddFriend(Convert.ToInt32(item[0].Text.Split('(')[1].Replace(')',' ').Trim()), Convert.ToInt32(match.Groups[1].Value)))
+                    if (sqlUtils.AddFriend(Convert.ToInt32(item[0].Text.Split('(')[1].Replace(')', ' ').Trim()), Convert.ToInt32(match.Groups[1].Value)))
                     {
                         MessageBox.Show("添加成功");
                     }
@@ -136,6 +149,14 @@ namespace MyQQ4Client
                     }
                 }
             }
+        }
+
+
+        private void solve_news(ListView.SelectedListViewItemCollection item)
+        {
+            MainForm mainForm = GlobalVariables.mainForm;
+            mainForm.richTextBox_msg.Clear();
+            mainForm.map_notice_and_println(item[0].Text.Split(':')[0].Replace("#####","").Trim(),"");
         }
     }
 

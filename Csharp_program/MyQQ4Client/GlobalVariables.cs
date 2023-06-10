@@ -13,7 +13,12 @@ namespace MyQQ4Client
         //只有offline/online
         public static string isOnline = "offline";
 
-        public static string myname = "buaaer";
+        public static string myname = "";
 
+        public static int id = -1;
+
+        public static int destiny_id = -1;
+
+        public static MainForm mainForm = null;
     }
 }

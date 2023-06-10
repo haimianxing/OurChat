@@ -25,6 +25,7 @@ namespace MyQQ4Client
         static string uid = "";
 
         public List<Msg> notices = new List<Msg>();
+        public Dictionary<string,string> news_dict = new Dictionary<string,string>();
 
         
         
@@ -43,7 +44,8 @@ namespace MyQQ4Client
             myname = GlobalVariables.myname;
             sqlUtils.setDB(db);
             textBox_username.Text = myname;
-
+            flush_form();
+            GlobalVariables.mainForm = this;
 
         }
 
@@ -112,9 +114,13 @@ namespace MyQQ4Client
             return (int)this.numericUpDownPort.Value;
         }
 
+        /// <summary>
+        /// 发送格式添加目标id
+        /// </summary>
+        /// <returns></returns>
         public string GetMsgText()
         {
-            return this.textBoxSendee.Text.Trim();
+            return GlobalVariables.destiny_id + "&" + this.textBoxSendee.Text.Trim();
         }
 
         public void ClearMsgText()
@@ -125,14 +131,14 @@ namespace MyQQ4Client
         delegate void VoidString(string s);
         public void Println(string s)
         {
-            if (this.textBoxMsg.InvokeRequired)
+            if (this.richTextBox_msg.InvokeRequired)
             {
                 VoidString println = Println;
-                this.textBoxMsg.Invoke(println, s);
+                this.richTextBox_msg.Invoke(println, s);
             }
             else
             {
-                this.textBoxMsg.AppendText(s + Environment.NewLine);
+                this.richTextBox_msg.AppendText(s + Environment.NewLine);
             }
         }
 
@@ -165,7 +171,8 @@ namespace MyQQ4Client
             if (this.buttonSend.InvokeRequired)
             {
                 VoidBool sbse = SetButtonSendEnabled;
-                this.textBoxMsg.Invoke(sbse, enabled);
+                //this.textBoxMsg.Invoke(sbse, enabled);
+                this.richTextBox_msg.Invoke(sbse, enabled);
             }
             else
             {
@@ -180,16 +187,23 @@ namespace MyQQ4Client
             textBox_username.Visible = false;
             textBox_username.Text = "";
             timer1.Interval = 50000;
-            timer1.Start();
+            //timer1.Start();
 
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (textBox_username.Text != "")//每5秒查询更新好友
+            flush_form();
+        }
+
+        /// <summary>
+        /// 刷新列表
+        /// </summary>
+        public void flush_form() {
+            if (GlobalVariables.myname != "")//每5秒查询更新好友
             {
                 SqlUtils sqlUtils = new SqlUtils();
-                string result = sqlUtils.getSelfId(textBox_username.Text);
+                string result = sqlUtils.getSelfId(GlobalVariables.myname);
                 Regex regex = new Regex(@"id:\s*(\d+)"); // 定义正则表达式
                 Match match = regex.Match(result); // 匹配字符串
                 int uid = 1;
@@ -199,19 +213,21 @@ namespace MyQQ4Client
                     int id = int.Parse(idValue); // 将字符串转换为整数类型的值
                     uid = id;
                 }
-
+                GlobalVariables.id = uid;
                 sqlUtils.setDB(db);
                 result = sqlUtils.getFriend(uid);
                 string pattern = @"Nickname:\s*(\w+),\s*id:\s*\d+";
-                 regex = new Regex(pattern);
+                regex = new Regex(pattern);
                 MatchCollection matches = regex.Matches(result);
                 textBox1.Text = string.Empty;
+                listView_names.Items.Clear();
                 if (matches.Count > 0)
                 {
                     foreach (Match match1 in matches)
                     {
                         string nickname = match1.Groups[1].Value;
                         textBox1.Text += nickname + Environment.NewLine; // 输出
+                        listView_names.Items.Add(nickname);
                     }
                 }
                 else
@@ -219,6 +235,45 @@ namespace MyQQ4Client
                     Console.WriteLine("No match found.");
                 }
             }
+        }
+
+        /// <summary>
+        /// listview双击切换对话
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listView_names_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left  && listView_names.SelectedItems.Count>0) {
+                string destiny_name = listView_names.SelectedItems[0].Text;
+                string v = sqlUtils.getSelfId2(destiny_name);
+                GlobalVariables.destiny_id = Convert.ToInt32(v);
+
+                //待转换窗口
+            }
+            
+        }
+
+        /// <summary>
+        /// 打印显示
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="news"></param>
+        internal void map_notice_and_println(string id,string news)
+        {
+            string destiny = sqlUtils.getSelfName(id);
+            if (!news_dict.ContainsKey(id))
+            {
+                news_dict.Add(id.ToString(), "");
+                Msg msg = new Msg();
+                msg.type = MsgType.Notice;
+                msg.content = "#####" + destiny + " :给您发了一条消息";
+                notices.Add(msg);
+            }
+            if (!news.Equals("")) {
+                news_dict[id.ToString()] += destiny + ": " + news + Environment.NewLine;
+            }
+            Println(news_dict[id.ToString()]);
         }
     }
 }
