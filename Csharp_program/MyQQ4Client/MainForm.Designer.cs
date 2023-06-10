@@ -33,7 +33,6 @@
             this.textBoxSendee = new System.Windows.Forms.TextBox();
             this.buttonSend = new System.Windows.Forms.Button();
             this.buttonConnect = new System.Windows.Forms.Button();
-            this.textBoxMsg = new System.Windows.Forms.TextBox();
             this.numericUpDownPort = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxIP = new System.Windows.Forms.TextBox();
@@ -46,6 +45,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.noticeLable = new System.Windows.Forms.Label();
+            this.listView_names = new System.Windows.Forms.ListView();
+            this.richTextBox_msg = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -86,17 +87,6 @@
             this.buttonConnect.TabIndex = 14;
             this.buttonConnect.Text = "连接";
             this.buttonConnect.UseVisualStyleBackColor = true;
-            // 
-            // textBoxMsg
-            // 
-            this.textBoxMsg.BackColor = System.Drawing.SystemColors.Window;
-            this.textBoxMsg.Location = new System.Drawing.Point(15, 74);
-            this.textBoxMsg.Multiline = true;
-            this.textBoxMsg.Name = "textBoxMsg";
-            this.textBoxMsg.ReadOnly = true;
-            this.textBoxMsg.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxMsg.Size = new System.Drawing.Size(277, 235);
-            this.textBoxMsg.TabIndex = 13;
             // 
             // numericUpDownPort
             // 
@@ -180,6 +170,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.listView_names);
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Location = new System.Drawing.Point(290, 68);
             this.groupBox1.Name = "groupBox1";
@@ -191,17 +182,18 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("宋体", 14.14286F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox1.Location = new System.Drawing.Point(6, 20);
+            this.textBox1.Location = new System.Drawing.Point(32, 167);
             this.textBox1.MaxLength = 15;
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(207, 215);
+            this.textBox1.Size = new System.Drawing.Size(120, 68);
             this.textBox1.TabIndex = 25;
             // 
             // timer1
             // 
             this.timer1.Enabled = true;
+            this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // noticeLable
@@ -213,11 +205,31 @@
             this.noticeLable.TabIndex = 27;
             this.noticeLable.Text = "通知";
             // 
+            // listView_names
+            // 
+            this.listView_names.HideSelection = false;
+            this.listView_names.Location = new System.Drawing.Point(8, 20);
+            this.listView_names.Name = "listView_names";
+            this.listView_names.Size = new System.Drawing.Size(205, 215);
+            this.listView_names.TabIndex = 26;
+            this.listView_names.UseCompatibleStateImageBehavior = false;
+            this.listView_names.View = System.Windows.Forms.View.List;
+            this.listView_names.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView_names_MouseDoubleClick);
+            // 
+            // richTextBox_msg
+            // 
+            this.richTextBox_msg.Location = new System.Drawing.Point(12, 74);
+            this.richTextBox_msg.Name = "richTextBox_msg";
+            this.richTextBox_msg.Size = new System.Drawing.Size(270, 235);
+            this.richTextBox_msg.TabIndex = 27;
+            this.richTextBox_msg.Text = "";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(511, 351);
+            this.Controls.Add(this.richTextBox_msg);
             this.Controls.Add(this.noticeLable);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textBox_username);
@@ -228,7 +240,6 @@
             this.Controls.Add(this.textBoxSendee);
             this.Controls.Add(this.buttonSend);
             this.Controls.Add(this.buttonConnect);
-            this.Controls.Add(this.textBoxMsg);
             this.Controls.Add(this.numericUpDownPort);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBoxIP);
@@ -250,7 +261,6 @@
         private System.Windows.Forms.TextBox textBoxSendee;
         private System.Windows.Forms.Button buttonSend;
         private System.Windows.Forms.Button buttonConnect;
-        private System.Windows.Forms.TextBox textBoxMsg;
         private System.Windows.Forms.NumericUpDown numericUpDownPort;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxIP;
@@ -263,6 +273,8 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Timer timer1;
         public System.Windows.Forms.Label noticeLable;
+        private System.Windows.Forms.ListView listView_names;
+        public System.Windows.Forms.RichTextBox richTextBox_msg;
     }
 }
 
