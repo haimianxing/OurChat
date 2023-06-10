@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MyQQ4Client;
 using MySqlX.XDevAPI.Common;
+using System.Threading;
+using static MyQQ4Client.MainForm;
+using Message;
+using System.Net.Sockets;
 
 
 // 添加好友窗口
@@ -21,13 +25,21 @@ namespace MyQQ4Client
         private Button buttonSave;
         private Label label1;
         private SqlUtils sqlUtils;
+        private Socket clientSocket;
 
         public AddFriendForm()
         {
             InitializeComponent();
             sqlUtils = new SqlUtils();
         }
+        
 
+        public AddFriendForm(Socket clientSocket)
+        {
+            this.clientSocket = clientSocket;
+            InitializeComponent();
+            sqlUtils = new SqlUtils();
+        }
 
 
         private void InitializeComponent()
@@ -92,28 +104,34 @@ namespace MyQQ4Client
                 // 查询好友uid是否注册
                 if(sqlUtils.IsExistUser(FriendID))
                 {
-                    //暂时没有得到自己sid的方法，晚些修改
-                    
-                    string result = sqlUtils.getSelfId(MainForm.myname);
-                    Console.WriteLine(result);
-                    Regex regex = new Regex(@"id:\s*(\d+)"); // 定义正则表达式
-                    Match match = regex.Match(result); // 匹配字符串
-                    if (match.Success)
+                    //只支持在线添加好友
+                    //检查好友是否在线
+                    try
                     {
-                        string idValue = match.Groups[1].Value; // 提取 id 属性值
-                        int id = int.Parse(idValue); // 将字符串转换为整数类型的值
-
-                        if (sqlUtils.AddFriend(id, Convert.ToInt32(FriendID)))
+                        //发送检查
+                        Program.SendCheckOnline(FriendID);
+                        //等2s
+                        Thread.Sleep(2000);
+                        if (GlobalVariables.isOnline == "offline")
                         {
-                            MessageBox.Show("添加成功");
+                            MessageBox.Show("好友不在线");
+                            return;
                         }
-                    }
-                    else {
 
-                        MessageBox.Show("添加失败");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
                     }
 
+                    string v = sqlUtils.getSelfId(GlobalVariables.myname).Split(' ')[3].Replace(')',' ').Trim();
+
+
+                    MsgType type = MsgType.Notice;
+                    string content = GlobalVariables.myname + "(" + v + ") " + FriendID;
+                    Program.SendMsg(type, content,clientSocket);
                     
+
                 }
                 else
                 {

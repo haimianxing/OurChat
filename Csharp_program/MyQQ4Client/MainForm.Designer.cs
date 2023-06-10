@@ -45,6 +45,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.noticeLable = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -143,7 +144,7 @@
             // 
             // buttonAddFriend
             // 
-            this.buttonAddFriend.Location = new System.Drawing.Point(367, 39);
+            this.buttonAddFriend.Location = new System.Drawing.Point(296, 39);
             this.buttonAddFriend.Name = "buttonAddFriend";
             this.buttonAddFriend.Size = new System.Drawing.Size(75, 23);
             this.buttonAddFriend.TabIndex = 18;
@@ -203,11 +204,21 @@
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // noticeLable
+            // 
+            this.noticeLable.AutoSize = true;
+            this.noticeLable.Location = new System.Drawing.Point(448, 44);
+            this.noticeLable.Name = "noticeLable";
+            this.noticeLable.Size = new System.Drawing.Size(29, 12);
+            this.noticeLable.TabIndex = 27;
+            this.noticeLable.Text = "通知";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(511, 351);
+            this.Controls.Add(this.noticeLable);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textBox_username);
             this.Controls.Add(this.pictureBox1);
@@ -247,10 +258,11 @@
         private System.Windows.Forms.Button buttonAddFriend;
         private System.Windows.Forms.Button button_ChangeName;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TextBox textBox_username;
+        public System.Windows.Forms.TextBox textBox_username;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Timer timer1;
+        public System.Windows.Forms.Label noticeLable;
     }
 }
 

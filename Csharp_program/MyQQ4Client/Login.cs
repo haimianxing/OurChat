@@ -32,15 +32,15 @@ namespace MyQQ4Client
 
         }
 
-        public void record_txt(string name) {
-            string path = @"./record.txt"; // 存储路径和文件名
-            if (File.Exists(path))
-            {
-                File.WriteAllText(path, ""); // 将文件内容清空
-                File.Delete(path); // 删除文件
-            }
-            File.WriteAllText(path, name);
-        }
+        //public void record_txt(string name) {
+        //    string path = @"./record.txt"; // 存储路径和文件名
+        //    if (File.Exists(path))
+        //    {
+        //        File.WriteAllText(path, ""); // 将文件内容清空
+        //        File.Delete(path); // 删除文件
+        //    }
+        //    File.WriteAllText(path, name);
+        //}
 
         private void registerBt_Click(object sender, EventArgs e)
         {
@@ -86,7 +86,8 @@ namespace MyQQ4Client
                 this.Dispose();
                 this.Close();
                 //返回并创建一个主页面
-                record_txt(name);
+                //record_txt(name);
+                GlobalVariables.myname = name;
                 Publicv.Creatmainform = true;
                 return ;                                    
             }

@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Message;
 using MyQQ4Client;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI.Common;
@@ -19,45 +20,35 @@ namespace MyQQ4Client
     public partial class MainForm : Form
     {
         Database db = new Database();
-        SqlUtils sqlUtils = new SqlUtils();
+        public SqlUtils sqlUtils = new SqlUtils();
         public static String myname = "buaa"; //名字
         static string uid = "";
-        public MainForm(EventHandler b1Click, EventHandler b2Click, EventHandler b3Click, EventHandler b4Click)
+
+        public List<Msg> notices = new List<Msg>();
+
+        
+        
+        public MainForm(EventHandler b1Click, EventHandler b2Click, EventHandler b3Click, EventHandler b4Click,EventHandler b5Click)
         {
             InitializeComponent();
             this.buttonConnect.Click += b1Click;
             this.buttonSend.Click += b2Click;
             this.buttonAddFriend.Click += b3Click;
-            this.button_ChangeName.Click += ChangeName;
+            this.noticeLable.Click += b5Click;
+            this.button_ChangeName.Click += b4Click;
 
             
 
 
-            myname = read();
+            myname = GlobalVariables.myname;
             sqlUtils.setDB(db);
             textBox_username.Text = myname;
 
-            //Console.WriteLine(sqlUtils.RegisterUsers("zcz", "123"));//注册用户和密码
-            //Console.WriteLine(sqlUtils.CheckUser("buaa", "0"));//验证用户和密码 返回错误与数据库不匹配
-            //Console.WriteLine(sqlUtils.CheckUser("buaa", "123456"));//验证用户和密码 返回正确与数据库匹配
-            //Console.WriteLine(sqlUtils.AddFriend(9, 5)); //给id为9号的用户添加id为5号的朋友
-            //Console.WriteLine(sqlUtils.AddFriend(2, 1)); //给id为2号的用户添加id为1号的朋友
-            //Console.WriteLine(sqlUtils.getFriend(1) );
-            //Console.WriteLine(sqlUtils.getSelfId("buaa") );
 
         }
 
         
 
-        public string read()
-        {
-            string path = @"./record.txt";
-            if (!File.Exists(path))
-            {
-                File.WriteAllText(path, "");
-            }
-            return File.ReadAllText(path);
-        }
 
         // 定义存储额外参数的自定义类
         public class MyEventArgs : EventArgs
@@ -86,7 +77,7 @@ namespace MyQQ4Client
         {
 
             SqlUtils sqlUtils = new SqlUtils();
-            string res = sqlUtils.getSelfId(read());
+            string res = sqlUtils.getSelfId(GlobalVariables.myname);
             Regex regex = new Regex(@"id:\s*(\d+)"); // 定义正则表达式
             Match match = regex.Match(res); // 匹配字符串
             uid = match.Groups[1].Value;
@@ -208,7 +199,6 @@ namespace MyQQ4Client
                     int id = int.Parse(idValue); // 将字符串转换为整数类型的值
                     uid = id;
                 }
-
 
                 sqlUtils.setDB(db);
                 result = sqlUtils.getFriend(uid);

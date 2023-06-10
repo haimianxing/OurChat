@@ -14,6 +14,8 @@ using System.Xml.Linq;
 using System.IO;
 using MySqlX.XDevAPI.Common;
 using static MyQQ4Client.MainForm;
+using System.Runtime.Serialization.Formatters.Binary;
+using Message;
 
 namespace MyQQ4Client
 {
@@ -22,13 +24,7 @@ namespace MyQQ4Client
         static Socket clientSocket = null;
         static IPAddress ip = null;
         static IPEndPoint point = null;
-        static PictureBox pictureBox = null;
-        static TextBox textBox_name = null;
-        static TextBox textBox_friend = null;
-        static string uid = "";
-
-        static MainForm form = null;
-        /// <summary>
+                /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
@@ -36,31 +32,31 @@ namespace MyQQ4Client
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            form = new MainForm(bConnectClick, bSendClick,bAddFriendClick,bChangeClick);
+            form = new MainForm(bConnectClick, bSendClick,bAddFriendClick,bChangeClick,bNoticiClick);
             Application.Run(new Login());
             if (Publicv.Creatmainform)
             {
                 Publicv.Creatmainform = false;//标志复位
+                form.textBox_username.Text = GlobalVariables.myname;
                 Application.Run(form);//启动主界面
             }
             
         }
 
-        public static string read()
-        {
-            string path = @"./record.txt";
-            if (!File.Exists(path))
-            {
-                File.WriteAllText(path, "");
-            }
-            return File.ReadAllText(path);
-        }
+        static PictureBox pictureBox = null;
+        static TextBox textBox_name = null;
+        static TextBox textBox_friend = null;
+        static string uid = "";
+        static MainForm form = null;
+
+
 
 
         static EventHandler bConnectClick = SetConnection;
-        static EventHandler bSendClick = SendMsg;
         static EventHandler bAddFriendClick = AddFriend;
         static EventHandler bChangeClick = ChangeName;
+        static EventHandler bSendClick = SendText;
+        static EventHandler bNoticiClick = Notice;
 
 
         //更改名称
@@ -69,7 +65,7 @@ namespace MyQQ4Client
             string name = (e as MyEventArgs)?.Name;
 
             SqlUtils sqlUtils = new SqlUtils();
-            string res = sqlUtils.getSelfId(read());
+            string res = sqlUtils.getSelfId(GlobalVariables.myname);
             Regex regex = new Regex(@"id:\s*(\d+)"); // 定义正则表达式
             Match match = regex.Match(res); // 匹配字符串
             uid = match.Groups[1].Value;
@@ -92,7 +88,6 @@ namespace MyQQ4Client
                 MessageBox.Show("数据库连接错误");
             }
         }
-
 
         static void SetConnection(object sender, EventArgs e)
         {
@@ -146,52 +141,58 @@ namespace MyQQ4Client
                 }
                 Database db = new Database();
                 SqlUtils sqlUtils = new SqlUtils();
-                string result = sqlUtils.getSelfId(MainForm.myname);
-                Regex regex = new Regex(@"id:\s*(\d+)"); // 定义正则表达式
-                Match match = regex.Match(result); // 匹配字符串
-                if (match.Success)
-                {
-                    string idValue = match.Groups[1].Value; // 提取 id 属性值
-                    int id = int.Parse(idValue); // 将字符串转换为整数类型的值
-                    uid = id.ToString();
-                }
+                //string result = sqlUtils.getSelfId(GlobalVariables.myname);
+                //Regex regex = new Regex(@"id:\s*(\d+)"); // 定义正则表达式
+                //Match match = regex.Match(result); // 匹配字符串
+                //if (match.Success)
+                //{
+                //    string idValue = match.Groups[1].Value; // 提取 id 属性值
+                //    int id = int.Parse(idValue); // 将字符串转换为整数类型的值
+                //    uid = id.ToString();
+                //}
                     
-                string connStr = "server=127.0.0.1;port=3306;user=root;password=root;database=myqq_user;";
-                MySqlConnection conn = new MySqlConnection(connStr);
-                conn.Open();
-                string sql_id = "SELECT * FROM qq_user where uid=" + uid;
-                //string sql_fri = "SELECT b1.name AS pidName, b2.name AS sidName FROM friend_table\r\nJOIN qq_user AS b1 ON friend_table.pid=b1.uid\r\nJOIN qq_user AS b2 ON friend_table.sid=b2.uid\r\nWHERE friend_table.friend_id="+uid+";";
-                //查用户名的sql
-                MySqlCommand cmd = new MySqlCommand(sql_id, conn);
-                MySqlDataReader reader = cmd.ExecuteReader();       //处理查询结果,创建一个实例保存查询出来的结构
-                while (reader.Read())
-                {
-                    textBox_name.Text = reader.GetString(1);
-                }
+                //string connStr = "server=127.0.0.1;port=3306;user=root;password=root;database=myqq_user;";
+                //MySqlConnection conn = new MySqlConnection(connStr);
+                //conn.Open();
+                //string sql_id = "SELECT * FROM qq_user where uid=" + uid;
+                ////string sql_fri = "SELECT b1.name AS pidName, b2.name AS sidName FROM friend_table\r\nJOIN qq_user AS b1 ON friend_table.pid=b1.uid\r\nJOIN qq_user AS b2 ON friend_table.sid=b2.uid\r\nWHERE friend_table.friend_id="+uid+";";
+                ////查用户名的sql
+                //MySqlCommand cmd = new MySqlCommand(sql_id, conn);
+                //MySqlDataReader reader = cmd.ExecuteReader();       //处理查询结果,创建一个实例保存查询出来的结构
+                //while (reader.Read())
+                //{
+                //    textBox_name.Text = reader.GetString(1);
+                //}
+                textBox_name.Text = GlobalVariables.myname;
                 // 关闭数据读取器
-                reader.Close();
-                try
-                {
-                    if (conn.State == System.Data.ConnectionState.Open)
-                    {
-                        //MessageBox.Show("数据库已打开");
-                    }
-                    else
-                    {
-                        MessageBox.Show("数据库打开失败");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                conn.Close();
+                //reader.Close();
+                //try
+                //{
+                //    if (conn.State == System.Data.ConnectionState.Open)
+                //    {
+                //        //MessageBox.Show("数据库已打开");
+                //    }
+                //    else
+                //    {
+                //        MessageBox.Show("数据库打开失败");
+                //    }
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show(ex.Message);
+                //}
+                //conn.Close();
 
 
                 //不停的接收服务器端发送的消息
                 Thread thread = new Thread(Receive);
                 thread.IsBackground = true;
+                //连接成功发送自己Id给服务器
+                SendMsg(MsgType.ConnectMessage, form.sqlUtils.getSelfId(GlobalVariables.myname));
                 thread.Start(clientSocket);
+
+               
+
 
             }
             catch (Exception ex)
@@ -210,8 +211,36 @@ namespace MyQQ4Client
                     byte[] buf = new byte[1024 * 1024 * 2];
                     int len = send.Receive(buf);
                     if (len == 0) break;
-                    string s = Encoding.UTF8.GetString(buf, 0, len);
-                    form.Println(s);
+                    //string s = Encoding.UTF8.GetString(buf, 0, len);
+                    //form.Println(s);
+
+                    //反序列化
+                    System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new BinaryFormatter();
+                    using (System.IO.MemoryStream ms = new MemoryStream(buf, 0, len))
+                    {
+                        Msg msg = (Msg)formatter.Deserialize(ms);
+
+                        switch (msg.type)
+                        {
+                            //文本消息 
+                            case MsgType.Text:
+                                form.Println(msg.content);
+                                break;
+                            //通知消息
+                            case MsgType.Notice:
+                                form.notices.Add(msg);
+                                //刷新通知显示数量
+                                form.noticeLable.Text = "通知 " + form.notices.Count;
+                                break;
+                            //检查在线消息,收到不回复，服务器处理
+                            case MsgType.CheckOnline:
+                                GlobalVariables.isOnline = msg.content;
+                                break;
+                            //在线检查返回信息
+                            default: break;
+                        }
+                    }
+
                 }
                 catch (Exception e)
                 {
@@ -220,7 +249,58 @@ namespace MyQQ4Client
                     form.Println($"服务器已中断连接：{e.Message}");
                     break;
                 }
+
+
+
+
             }
+        }
+
+        //消息发送
+        public static void SendMsg(MsgType type, string content)
+        {
+            Msg msg = new Msg();
+            msg.type = type;
+            msg.content = content;
+            //序列化
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                formatter.Serialize(ms, msg);
+                byte[] data = ms.ToArray();
+
+                // 使用 Socket 发送msg class
+                clientSocket.Send(data);
+            }
+        }
+
+        //消息发送
+        public static void SendMsg(MsgType type, string content,Socket socket)
+        {
+            Msg msg = new Msg();
+            msg.type = type;
+            msg.content = content;
+            //序列化
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                formatter.Serialize(ms, msg);
+                byte[] data = ms.ToArray();
+
+                // 使用 Socket 发送msg class
+                socket.Send(data);
+            }
+        }
+
+        //发送文本
+        static void SendText(object sender, EventArgs e)
+        {
+            MsgType type = MsgType.Text;
+            string content = form.GetMsgText();
+            if (content == "") return;
+            SendMsg(type, content);
+
+            form.ClearMsgText();
         }
 
         static void SendMsg(object sender, EventArgs e)
@@ -236,8 +316,34 @@ namespace MyQQ4Client
         static void AddFriend(object sender, EventArgs e)
         {
             //打开输入信息窗口
-            AddFriendForm fAddFriend = new AddFriendForm();
+            AddFriendForm fAddFriend = new AddFriendForm(clientSocket);
             fAddFriend.Show();
+        }
+
+        //通知
+        static void Notice(object sender, EventArgs e)
+        {
+
+            //打开通知窗口
+            NoticeForm fNotice = new NoticeForm(form.notices);
+            fNotice.Show();
+            fNotice.FormClosing += (Object t, FormClosingEventArgs s) =>
+            {
+                if (form.notices.Count > 0)
+                {
+                    //刷新通知显示数量
+                    form.noticeLable.Text = "通知 " + form.notices.Count;
+                }
+            };
+        }
+
+        //检查在线信息发送
+        public static void SendCheckOnline(string uid)
+        {
+            //缺少根据uid查询对方ip地址的方法
+            MsgType type = MsgType.CheckOnline;
+            string content = uid;
+            SendMsg(type, content);
         }
     }
 }

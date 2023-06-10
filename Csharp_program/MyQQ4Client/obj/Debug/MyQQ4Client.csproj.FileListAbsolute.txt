@@ -92,3 +92,4 @@ E:\proj\others\bk\OurChat\Csharp_program\MyQQ4Client\obj\Debug\MyQQ4Client.cspro
 E:\proj\others\bk\OurChat\Csharp_program\MyQQ4Client\obj\Debug\MyQQ4Client.csproj.CopyComplete
 E:\proj\others\bk\OurChat\Csharp_program\MyQQ4Client\obj\Debug\MyQQ4Client.exe
 E:\proj\others\bk\OurChat\Csharp_program\MyQQ4Client\obj\Debug\MyQQ4Client.pdb
+E:\proj\others\bk\OurChat\Csharp_program\MyQQ4Client\bin\Debug\Message.dll
