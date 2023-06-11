@@ -42,10 +42,10 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.textBox_username = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.listView_names = new System.Windows.Forms.ListView();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.noticeLable = new System.Windows.Forms.Label();
-            this.listView_names = new System.Windows.Forms.ListView();
             this.richTextBox_msg = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -71,7 +71,6 @@
             // 
             // buttonSend
             // 
-            this.buttonSend.Enabled = false;
             this.buttonSend.Location = new System.Drawing.Point(421, 315);
             this.buttonSend.Name = "buttonSend";
             this.buttonSend.Size = new System.Drawing.Size(75, 23);
@@ -179,6 +178,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "好友";
             // 
+            // listView_names
+            // 
+            this.listView_names.HideSelection = false;
+            this.listView_names.Location = new System.Drawing.Point(8, 20);
+            this.listView_names.Name = "listView_names";
+            this.listView_names.Size = new System.Drawing.Size(205, 215);
+            this.listView_names.TabIndex = 26;
+            this.listView_names.UseCompatibleStateImageBehavior = false;
+            this.listView_names.View = System.Windows.Forms.View.List;
+            this.listView_names.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView_names_MouseDoubleClick);
+            // 
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("宋体", 14.14286F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -204,17 +214,6 @@
             this.noticeLable.Size = new System.Drawing.Size(29, 12);
             this.noticeLable.TabIndex = 27;
             this.noticeLable.Text = "通知";
-            // 
-            // listView_names
-            // 
-            this.listView_names.HideSelection = false;
-            this.listView_names.Location = new System.Drawing.Point(8, 20);
-            this.listView_names.Name = "listView_names";
-            this.listView_names.Size = new System.Drawing.Size(205, 215);
-            this.listView_names.TabIndex = 26;
-            this.listView_names.UseCompatibleStateImageBehavior = false;
-            this.listView_names.View = System.Windows.Forms.View.List;
-            this.listView_names.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView_names_MouseDoubleClick);
             // 
             // richTextBox_msg
             // 

@@ -25,10 +25,12 @@ namespace MyQQ4Client
         static string uid = "";
 
         public List<Msg> notices = new List<Msg>();
-        public Dictionary<string,string> news_dict = new Dictionary<string,string>();
+        public Dictionary<string,string> chatMessage = new Dictionary<string,string>();
+        //聊天记录
 
-        
-        
+
+
+
         public MainForm(EventHandler b1Click, EventHandler b2Click, EventHandler b3Click, EventHandler b4Click,EventHandler b5Click)
         {
             InitializeComponent();
@@ -120,7 +122,7 @@ namespace MyQQ4Client
         /// <returns></returns>
         public string GetMsgText()
         {
-            return GlobalVariables.destiny_id + "&" + this.textBoxSendee.Text.Trim();
+            return this.textBoxSendee.Text.Trim();
         }
 
         public void ClearMsgText()
@@ -139,8 +141,16 @@ namespace MyQQ4Client
             else
             {
                 this.richTextBox_msg.AppendText(s + Environment.NewLine);
+                this.richTextBox_msg.Text = s;
             }
         }
+
+        //delegate void VoidString(string s);
+        //public void Println2(string s)
+        //{
+        //    this.richTextBox_msg.Text = string.Empty;
+        //    this.richTextBox_msg.Text += s;
+        //}
 
         delegate void VoidBoolString(bool b, string s);
         public void SetConnectionStatusLabel(bool isConnect, string point = null)
@@ -250,6 +260,11 @@ namespace MyQQ4Client
                 GlobalVariables.destiny_id = Convert.ToInt32(v);
 
                 //待转换窗口
+                //richTextBox_msg.Text = string.Empty;
+                //if (chatMessage.ContainsKey(GlobalVariables.destiny_id.ToString())) {
+                //    richTextBox_msg.Text = chatMessage[GlobalVariables.destiny_id.ToString()];
+                //    map_notice_and_println(v, "");
+                //}
             }
             
         }
@@ -262,18 +277,18 @@ namespace MyQQ4Client
         internal void map_notice_and_println(string id,string news)
         {
             string destiny = sqlUtils.getSelfName(id);
-            if (!news_dict.ContainsKey(id))
+            if (!chatMessage.ContainsKey(id))
             {
-                news_dict.Add(id.ToString(), "");
+                chatMessage.Add(id.ToString(), "");
                 Msg msg = new Msg();
                 msg.type = MsgType.Notice;
                 msg.content = "#####" + destiny + " :给您发了一条消息";
                 notices.Add(msg);
             }
             if (!news.Equals("")) {
-                news_dict[id.ToString()] += destiny + ": " + news + Environment.NewLine;
+                chatMessage[id.ToString()] +=   news + "\n";
             }
-            Println(news_dict[id.ToString()]);
+            Println(chatMessage[id.ToString()]);
         }
     }
 }

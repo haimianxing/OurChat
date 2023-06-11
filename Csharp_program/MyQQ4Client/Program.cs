@@ -184,19 +184,8 @@ namespace MyQQ4Client
                             //文本消息 
                             case MsgType.Text:
                                 //form.Println(msg.content);
-
-                                //文本消息处理格式对齐
-                                SqlUtils sqlUtils = new SqlUtils();
-                                string news = "";
-                                string[] s1 = msg.content.Split('&');
-                                if (s1[0].Equals(GlobalVariables.id)) {
-                                    news += "我：";
-                                }
-                                else {
-                                    news += sqlUtils.getSelfName(s1[0]) +": ";
-                                }
-                                news += s1[1];
-                                form.map_notice_and_println(s1[0], news);
+                                form.Println(msg.content);
+                                HandlePrivateChat(msg.content);
                                 break;
                             //通知消息
                             case MsgType.Notice:
@@ -221,9 +210,6 @@ namespace MyQQ4Client
                     form.Println($"服务器已中断连接：{e.Message}");
                     break;
                 }
-
-
-
 
             }
         }
@@ -267,9 +253,42 @@ namespace MyQQ4Client
         //发送文本
         static void SendText(object sender, EventArgs e)
         {
+            //string myId = form.sqlUtils.getSelfIdPure(GlobalVariables.myname);
+            string destId = GlobalVariables.destiny_id.ToString();
+            string message = form.GetMsgText();
+
+            //检查好友是否在线
+            try
+            {
+                //发送检查
+                Program.SendCheckOnline(destId);
+                //等0.1s
+                Thread.Sleep(100);
+                if (GlobalVariables.isOnline == "offline")
+                {
+                    MessageBox.Show("好友不在线");
+                    return;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+
+            //发送的信息也需要进聊天记录
+            if (!form.chatMessage.ContainsKey(destId))
+            {
+                form.chatMessage.Add(destId, "");
+            }
+            form.chatMessage[destId] += "我 ：" + message + "\n";
+            form.Println(form.chatMessage[destId]);
+
             MsgType type = MsgType.Text;
-            string content = form.GetMsgText();
-            if (content == "") return;
+
+            string content = destId + "&" + message;
+            if (content == "" || destId == "") return;
             SendMsg(type, content);
 
             form.ClearMsgText();
@@ -316,6 +335,40 @@ namespace MyQQ4Client
             MsgType type = MsgType.CheckOnline;
             string content = uid;
             SendMsg(type, content);
+        }
+
+        //处理接收私聊消息格式为id&content
+        public static void HandlePrivateChat(string msgContent)
+        {
+
+            string[] s = msgContent.Split('&');
+            string id = s[0];
+            string content = s[1];
+            //不包含id相关消息则包含进映射
+            //if (!form.chatMessage.ContainsKey(id))
+            //{
+            //    form.chatMessage.Add(id, content + "\n");
+            //}
+            //else
+            //{
+            //    form.chatMessage[id] += content + "\n";
+            //}
+
+
+            //文本消息处理格式对齐
+            SqlUtils sqlUtils = new SqlUtils();
+            string news = "";
+            if (null ==  id   || id.Equals("")  )
+            {
+                news += "我：";
+            }
+            else
+            {
+                news += sqlUtils.getSelfName(id) + ": ";
+            }
+            news += content;
+            form.map_notice_and_println(id, news);
+
         }
     }
 }

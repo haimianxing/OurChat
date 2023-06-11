@@ -126,15 +126,9 @@ namespace MyQQ
                         form.Println($"{clientPoint}: {msg.content},{msg.type}");
                         switch (msg.type)
                         {
-                            //文本消息,直接转发
+                            //私聊消息
                             case MsgType.Text:
-                                MsgType type = MsgType.Text;
-                                string content = msg.content;
-                                if (content == "") break;
-                                foreach (Socket t in allClientSockets.Values)
-                                {
-                                    SendMsg(type, content, t);
-                                }
+                                HandlePrivateChate(msg, clientSocket);
                                 break;
                             //通知消息
                             case MsgType.Notice:
@@ -152,7 +146,7 @@ namespace MyQQ
                                 {
                                     string id = match.Groups[1].Value; // 提取 id 属性值
                                     idIpDic.Add(id, clientSocket);
-                                    form.Println($"{id},{msg.type} 已加入字典。"+idIpDic.ToString());
+                                    form.Println($"{id},{msg.type} 已加入字典。" + idIpDic.ToString());
                                 }
                                 break;
                             default: break;
@@ -162,8 +156,21 @@ namespace MyQQ
                 }
                 catch (SocketException e)
                 {
-                    allClientSockets.Remove(clientPoint);
+                    //allClientSockets.Remove(clientPoint);
                     form.ComboBoxRemoveItem(clientPoint);
+
+                    //断连移除socket
+                    if (e.SocketErrorCode == SocketError.ConnectionReset)
+                    {
+                        foreach (var pair in idIpDic)
+                        {
+                            if (pair.Value == clientSocket)
+                            {
+                                idIpDic.Remove(pair.Key);
+                                break;
+                            }
+                        }
+                    }
 
                     form.Println($"客户端 {clientSocket.RemoteEndPoint} 中断连接： {e.Message}");
                     clientSocket.Close();
@@ -209,7 +216,7 @@ namespace MyQQ
         static void SendText(object sender, EventArgs e)
         {
             MsgType type = MsgType.Text;
-            string content = form.GetMsgText();
+            string content = "管理员" + "&" + form.GetMsgText();
             if (content == "") return;
             foreach (Socket s in allClientSockets.Values)
             {
@@ -245,6 +252,30 @@ namespace MyQQ
             }
 
             SendMsg(MsgType.CheckOnline, onlineState, clientSockt);
+
+        }
+
+        //私聊信息转发
+        static void HandlePrivateChate(Msg msg, Socket clientSockt)
+        {
+            MsgType type = MsgType.Text;
+            string[] s = msg.content.Split('&');
+            string sourceId = "";
+
+            foreach (var pair in idIpDic)
+            {
+                if (clientSockt == pair.Value)
+                {
+                    sourceId = pair.Key;
+                }
+            }
+
+            string content = sourceId + "&" + s[1];
+
+            //发送过来的第一个ip就是destId
+            Socket dest = idIpDic[s[0]];
+
+            SendMsg(type, content, dest);
 
         }
 

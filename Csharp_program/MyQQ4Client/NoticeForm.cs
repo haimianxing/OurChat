@@ -18,6 +18,7 @@ namespace MyQQ4Client
         //private string[] strings = null;
         private Dictionary<string, string> dicMessageToId;
 
+
         public NoticeForm()
         {
             InitializeComponent();
@@ -43,24 +44,25 @@ namespace MyQQ4Client
             // listView1
             // 
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(28, 27);
+            this.listView1.Location = new System.Drawing.Point(21, 22);
+            this.listView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(273, 101);
+            this.listView1.Size = new System.Drawing.Size(206, 82);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.List;
             this.listView1.ItemActivate += new System.EventHandler(this.listView1_ItemActivate);
-            this.listView1.MultiSelect = false;
             // 
             // NoticeForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(341, 154);
+            this.ClientSize = new System.Drawing.Size(256, 123);
             this.Controls.Add(this.listView1);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "NoticeForm";
             this.Text = "通知";
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NoticeForm_MouseClick);
             this.ResumeLayout(false);
 
         }
@@ -87,7 +89,6 @@ namespace MyQQ4Client
         {
             ListViewItem item = new ListViewItem(content);
             listView1.Items.Add(item);
-
         }
 
 
@@ -104,7 +105,6 @@ namespace MyQQ4Client
             }
             else {
                 solve_news(item);
-            
             }
 
             
@@ -126,14 +126,13 @@ namespace MyQQ4Client
                     if (sqlUtils.AddFriend(Convert.ToInt32(item[0].Text.Split('(')[1].Replace(')', ' ').Trim()), Convert.ToInt32(match.Groups[1].Value)))
                     {
                         MessageBox.Show("添加成功");
-                    }
-
-                    for (int i = 0; i < notices.Count; i++)
-                    {
-                        if (item[0].Text == notices[i].content)
+                        for (int i = 0; i < notices.Count; i++)
                         {
-                            notices.RemoveAt(i);
-                            break;
+                            if (item[0].Text == notices[i].content)
+                            {
+                                notices.RemoveAt(i);
+                                break;
+                            }
                         }
                     }
                 }
@@ -142,7 +141,8 @@ namespace MyQQ4Client
             {
                 for (int i = 0; i < notices.Count; i++)
                 {
-                    if (item[0].Text == notices[i].content)
+                    string niticesItem = notices[i].content.Split(' ')[0];
+                    if (item[0].Text == niticesItem)
                     {
                         notices.RemoveAt(i);
                         break;
@@ -151,12 +151,23 @@ namespace MyQQ4Client
             }
         }
 
-
         private void solve_news(ListView.SelectedListViewItemCollection item)
         {
             MainForm mainForm = GlobalVariables.mainForm;
             mainForm.richTextBox_msg.Clear();
             mainForm.map_notice_and_println(item[0].Text.Split(':')[0].Replace("#####","").Trim(),"");
+        }
+
+        private void NoticeForm_MouseClick(object sender, MouseEventArgs e)
+        {
+            for (int i = 0; i < notices.Count; i++)
+            {
+                if (notices[i].content.Contains("#####"))
+                {
+                    notices.RemoveAt(i);
+                    break;
+                }
+            }
         }
     }
 
