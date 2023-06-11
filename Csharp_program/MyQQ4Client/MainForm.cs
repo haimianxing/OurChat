@@ -265,10 +265,59 @@ namespace MyQQ4Client
                 if (chatMessage.ContainsKey(GlobalVariables.destiny_id.ToString()))
                 {
                     Println(chatMessage[GlobalVariables.destiny_id.ToString()]);
+                    //换行符分割每一条信息
+                    //string[] everyMessage = chatMessage[GlobalVariables.destiny_id.ToString()].Split('\n');
+                    ////遍历输出每一条信息
+                    //for (int i = 0; i < everyMessage.Length; i++)
+                    //{
+                    //    //截取前两个字符
+                    //    string subMessage = everyMessage[i].Substring(0, 2);
+                    //    if (subMessage == "我：")
+                    //    {
+                    //        AddSentMessage(everyMessage[i]);
+                    //    }
+                    //    else
+                    //    {
+                    //        AddReceiveMessage(everyMessage[i]);
+                    //    }
+                    //}
                 }
             }
             
         }
+
+        /// <summary>
+        /// 接收的消息左对齐和颜色设置
+        /// </summary>
+        /// <param name="message"></param>
+        private void AddReceiveMessage(string message)
+        {
+            richTextBox_msg.AppendText(message + Environment.NewLine);
+
+            int index = richTextBox_msg.Text.LastIndexOf(message);
+            richTextBox_msg.Select(index, message.Length);
+            richTextBox_msg.SelectionColor = Color.YellowGreen;
+            richTextBox_msg.SelectionAlignment = HorizontalAlignment.Left;
+            richTextBox_msg.Select(richTextBox_msg.Text.Length, 0);
+            richTextBox_msg.ScrollToCaret();
+
+        }
+        /// <summary>
+        /// 自己发送的消息左对齐和颜色设置
+        /// </summary>
+        /// <param name="message"></param>
+        private void AddSentMessage(string message)
+        {
+            richTextBox_msg.AppendText(message + Environment.NewLine);
+
+            int index = richTextBox_msg.Text.LastIndexOf(message);
+            richTextBox_msg.Select(index, message.Length);
+            richTextBox_msg.SelectionColor = Color.Blue;
+            richTextBox_msg.SelectionAlignment = HorizontalAlignment.Right;
+            richTextBox_msg.Select(richTextBox_msg.Text.Length, 0);
+            richTextBox_msg.ScrollToCaret();
+        }
+
 
         /// <summary>
         /// 打印显示
@@ -295,6 +344,7 @@ namespace MyQQ4Client
         }
 
         public void combox_friend_operation(string id) {
+            if (chatMessage.Count < 1) return;
             comboBox_friends.Items.Clear();
             comboBox_friends.Text = sqlUtils.getSelfName(id) + ":" + id;
             foreach (string key in chatMessage.Keys)

@@ -16,6 +16,7 @@ using MySqlX.XDevAPI.Common;
 using static MyQQ4Client.MainForm;
 using System.Runtime.Serialization.Formatters.Binary;
 using Message;
+using System.Drawing;
 
 namespace MyQQ4Client
 {
@@ -130,15 +131,15 @@ namespace MyQQ4Client
                         textBox_friend = control.Controls.Find("textBox1", true).FirstOrDefault() as TextBox;
 
                     }
-
                 }
                 Random random = new Random();
                 int image = random.Next(1, 4);
+                string solutionPath = AppDomain.CurrentDomain.BaseDirectory;
                 switch (image)
                 {
-                    case 1: pictureBox.Image = Properties.Resources.image1; break;
-                    case 2: pictureBox.Image = Properties.Resources.image2; break;
-                    case 3: pictureBox.Image = Properties.Resources.image3; break;
+                    case 1: pictureBox.Image = Image.FromFile(Path.Combine(solutionPath + "Resources", "image1.jpg")); break;
+                    case 2: pictureBox.Image = Image.FromFile(Path.Combine(solutionPath + "Resources", "image2.jpg")); break;
+                    case 3: pictureBox.Image = Image.FromFile(Path.Combine(solutionPath + "Resources", "image3.jpg")); break;
                 }
                 Database db = new Database();
                 SqlUtils sqlUtils = new SqlUtils();
