@@ -1,6 +1,6 @@
 
 # OurChat
-## 进阶聊天室大作业
+## 进阶聊天室
 
 ### A.成员
    张成哲（组长）：负责整体的架构设计、后台数据库及通信部分、服务器连接。
@@ -39,7 +39,7 @@
 ---------------------------------------------
 
 # OurChat
-## Engineering practice homework, advanced version chat program
+## Engineering practice, advanced version chat program
 
 
 ### A. Members
