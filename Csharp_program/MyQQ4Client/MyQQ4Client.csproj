@@ -39,6 +39,9 @@
     <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
+    <Reference Include="Message">
+      <HintPath>C:\Users\Administrator\Downloads\OurChat\Csharp_program\MyQQ4Client\Message.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=8.0.18.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>packages\MySql.Data.8.0.18\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
@@ -69,6 +72,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Database.cs" />
+    <Compile Include="GlobalVariables.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
@@ -78,6 +82,9 @@
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NoticeForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,6 +100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NoticeForm.resx">
+      <DependentUpon>NoticeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -121,6 +131,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="record.txt" />
     <Content Include="Resources\image1.jpg" />
     <Content Include="Resources\image2.jpg" />
     <Content Include="Resources\image3.jpg" />

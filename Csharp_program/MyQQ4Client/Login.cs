@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.IO;
 
 namespace MyQQ4Client
 {
@@ -30,6 +31,17 @@ namespace MyQQ4Client
             InitializeComponent();
 
         }
+
+        //public void record_txt(string name) {
+        //    string path = @"./record.txt"; // 存储路径和文件名
+        //    if (File.Exists(path))
+        //    {
+        //        File.WriteAllText(path, ""); // 将文件内容清空
+        //        File.Delete(path); // 删除文件
+        //    }
+        //    File.WriteAllText(path, name);
+        //}
+
         private void registerBt_Click(object sender, EventArgs e)
         {
             // 点击注册 跳转注册页面
@@ -74,6 +86,8 @@ namespace MyQQ4Client
                 this.Dispose();
                 this.Close();
                 //返回并创建一个主页面
+                //record_txt(name);
+                GlobalVariables.myname = name;
                 Publicv.Creatmainform = true;
                 return ;                                    
             }
