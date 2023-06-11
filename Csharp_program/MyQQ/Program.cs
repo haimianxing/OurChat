@@ -271,7 +271,9 @@ namespace MyQQ
             }
 
             string content = sourceId + "&" + s[1];
+            //string content = s[0] + "&" + s[1];
 
+            form.Println("原msg："+msg.content+" .转换后："+content);
             //发送过来的第一个ip就是destId
             Socket dest = idIpDic[s[0]];
 
