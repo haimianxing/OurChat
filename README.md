@@ -29,6 +29,13 @@
 
    使用语言：C#
 
+--------
+### 效果图
+![image](https://github.com/haimianxing/OurChat/assets/64762650/a40af625-9491-48cb-8a52-63e1c3637a84)
+
+![image](https://github.com/haimianxing/OurChat/assets/64762650/7ed5f4d2-3048-4bea-b139-322493d13420)
+
+
 ---------------------------------------------
 
 # OurChat
