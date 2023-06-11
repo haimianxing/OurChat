@@ -47,6 +47,7 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.noticeLable = new System.Windows.Forms.Label();
             this.richTextBox_msg = new System.Windows.Forms.RichTextBox();
+            this.comboBox_friends = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -68,6 +69,7 @@
             this.textBoxSendee.Name = "textBoxSendee";
             this.textBoxSendee.Size = new System.Drawing.Size(400, 21);
             this.textBoxSendee.TabIndex = 16;
+            this.textBoxSendee.TextChanged += new System.EventHandler(this.textBoxSendee_TextChanged);
             // 
             // buttonSend
             // 
@@ -154,7 +156,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(5, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(68, 50);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 24;
             this.pictureBox1.TabStop = false;
             // 
@@ -180,6 +182,7 @@
             // 
             // listView_names
             // 
+            this.listView_names.FullRowSelect = true;
             this.listView_names.HideSelection = false;
             this.listView_names.Location = new System.Drawing.Point(8, 20);
             this.listView_names.Name = "listView_names";
@@ -223,11 +226,22 @@
             this.richTextBox_msg.TabIndex = 27;
             this.richTextBox_msg.Text = "";
             // 
+            // comboBox_friends
+            // 
+            this.comboBox_friends.FormattingEnabled = true;
+            this.comboBox_friends.Location = new System.Drawing.Point(213, 47);
+            this.comboBox_friends.Name = "comboBox_friends";
+            this.comboBox_friends.Size = new System.Drawing.Size(69, 20);
+            this.comboBox_friends.TabIndex = 28;
+            this.comboBox_friends.SelectedIndexChanged += new System.EventHandler(this.comboBox_friends_SelectedIndexChanged);
+            this.comboBox_friends.MouseMove += new System.Windows.Forms.MouseEventHandler(this.comboBox_friends_MouseMove);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(511, 351);
+            this.Controls.Add(this.comboBox_friends);
             this.Controls.Add(this.richTextBox_msg);
             this.Controls.Add(this.noticeLable);
             this.Controls.Add(this.groupBox1);
@@ -274,6 +288,7 @@
         public System.Windows.Forms.Label noticeLable;
         private System.Windows.Forms.ListView listView_names;
         public System.Windows.Forms.RichTextBox richTextBox_msg;
+        public System.Windows.Forms.ComboBox comboBox_friends;
     }
 }
 

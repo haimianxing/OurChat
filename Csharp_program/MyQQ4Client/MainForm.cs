@@ -14,6 +14,7 @@ using Message;
 using MyQQ4Client;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI.Common;
+using Renci.SshNet.Security;
 
 namespace MyQQ4Client
 {
@@ -260,11 +261,11 @@ namespace MyQQ4Client
                 GlobalVariables.destiny_id = Convert.ToInt32(v);
 
                 //待转换窗口
-                //richTextBox_msg.Text = string.Empty;
-                //if (chatMessage.ContainsKey(GlobalVariables.destiny_id.ToString())) {
-                //    richTextBox_msg.Text = chatMessage[GlobalVariables.destiny_id.ToString()];
-                //    map_notice_and_println(v, "");
-                //}
+                richTextBox_msg.Text = string.Empty;
+                if (chatMessage.ContainsKey(GlobalVariables.destiny_id.ToString()))
+                {
+                    Println(chatMessage[GlobalVariables.destiny_id.ToString()]);
+                }
             }
             
         }
@@ -274,21 +275,50 @@ namespace MyQQ4Client
         /// </summary>
         /// <param name="id"></param>
         /// <param name="news"></param>
-        internal void map_notice_and_println(string id,string news)
+        public void map_notice_and_println(string id,string news)
         {
             string destiny = sqlUtils.getSelfName(id);
             if (!chatMessage.ContainsKey(id))
             {
                 chatMessage.Add(id.ToString(), "");
-                Msg msg = new Msg();
-                msg.type = MsgType.Notice;
-                msg.content = "#####" + destiny + " :给您发了一条消息";
-                notices.Add(msg);
             }
             if (!news.Equals("")) {
                 chatMessage[id.ToString()] +=   news + "\n";
             }
+            combox_friend_operation(id.ToString());
             Println(chatMessage[id.ToString()]);
         }
+
+        private void comboBox_friends_MouseMove(object sender, MouseEventArgs e)
+        {
+            combox_friend_operation(GlobalVariables.destiny_id.ToString());
+        }
+
+        public void combox_friend_operation(string id) {
+            comboBox_friends.Items.Clear();
+            comboBox_friends.Text = sqlUtils.getSelfName(id) + ":" + id;
+            foreach (string key in chatMessage.Keys)
+            {
+                //if (key.Equals(GlobalVariables.destiny_id.ToString())) continue;
+                comboBox_friends.Items.Add(sqlUtils.getSelfName(key) + ":" + key);
+            }
+        }
+
+        private void comboBox_friends_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox_friends.SelectedItem != null)
+            {
+                string selectedValue = comboBox_friends.SelectedItem.ToString().Split(':')[1];
+                Console.WriteLine("Selected Value: " + selectedValue);
+
+                Println(chatMessage[selectedValue]);
+            }
+        }
+
+        private void textBoxSendee_TextChanged(object sender, EventArgs e)
+        {
+            combox_friend_operation(GlobalVariables.destiny_id.ToString());
+        }
     }
+
 }

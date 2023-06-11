@@ -184,7 +184,7 @@ namespace MyQQ4Client
                             //文本消息 
                             case MsgType.Text:
                                 //form.Println(msg.content);
-                                form.Println(msg.content);
+                                //form.Println(msg.content);
                                 HandlePrivateChat(msg.content);
                                 break;
                             //通知消息
@@ -284,6 +284,7 @@ namespace MyQQ4Client
             }
             form.chatMessage[destId] += "我 ：" + message + "\n";
             form.Println(form.chatMessage[destId]);
+            
 
             MsgType type = MsgType.Text;
 
@@ -344,15 +345,6 @@ namespace MyQQ4Client
             string[] s = msgContent.Split('&');
             string id = s[0];
             string content = s[1];
-            //不包含id相关消息则包含进映射
-            //if (!form.chatMessage.ContainsKey(id))
-            //{
-            //    form.chatMessage.Add(id, content + "\n");
-            //}
-            //else
-            //{
-            //    form.chatMessage[id] += content + "\n";
-            //}
 
 
             //文本消息处理格式对齐
@@ -367,6 +359,7 @@ namespace MyQQ4Client
                 news += sqlUtils.getSelfName(id) + ": ";
             }
             news += content;
+            GlobalVariables.destiny_id = Convert.ToInt32(id);
             form.map_notice_and_println(id, news);
 
         }
